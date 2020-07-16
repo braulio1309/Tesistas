@@ -159,19 +159,7 @@ input[type="password"]{
     margin-bottom: 10px;
 }
 
-input[type="button"],
-input[type="submit"],
-.boton{
-    margin-top: 5px;
-    margin-bottom: 5px;
-    display: block;
-    border-radius: 2px;
-    color:white;
-    background: #007ee5;
-    border: 1px solid #156785;
-    cursor:pointer;
-    padding: 7px;
-}
+
 
 .boton{
     color:white !important;
@@ -259,4 +247,33 @@ input[type="submit"],
     height: auto;
     padding: 15px;
     text-align: center;
+}
+
+.login-container{
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+
+.login-form-2{
+    padding: 5%;
+    background: #0062cc;
+    box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
+}
+.login-form-2 h3{
+    text-align: center;
+    color: #fff;
+}
+.login-container form{
+    padding: 10%;
+}
+
+.login-form-2 .btnSubmit{
+    font-weight: 600;
+    color: #0062cc;
+    background-color: #fff;
+}
+.login-form-2 .ForgetPwd{
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
 }
