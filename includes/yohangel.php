@@ -1,6 +1,1 @@
-BRAULIO
-ES
-MUY
-MARICO
-Y
-PATO
+Error tus nalgas vale
