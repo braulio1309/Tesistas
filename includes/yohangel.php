@@ -1,1 +1,0 @@
-Error tus nalgas vale

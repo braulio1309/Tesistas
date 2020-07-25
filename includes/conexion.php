@@ -3,7 +3,7 @@
 $servidor = 'localhost';
 $usuario = 'root';
 $password = '';
-$basededatos = 'peliculas'; //Pon el nombre de la base de datos
+$basededatos = 'Sistema_Automatizado'; //Pon el nombre de la base de datos
 $db = mysqli_connect($servidor, $usuario, $password, $basededatos);
 
 mysqli_query($db, "SET NAMES 'utf8'");
