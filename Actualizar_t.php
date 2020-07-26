@@ -14,7 +14,7 @@
 		$correo_part=$_POST["correo_part"];
 		$telefono=$_POST["telefono"];
         $sexo=$_POST["sexo"];
-        var_dump($nombre); die();
+        //var_dump($nombre); die();
 		$sql="UPDATE tesistas SET (cedula ='$cedula' , nombre='$nombre' , correo_ucab='$correo_ucab', correo_part='$correo_part', telefono='$telefono', sexo='$sexo'
                WHERE cedula='$cedula')";
 		$tesista=mysqli_query($db,$sql);
