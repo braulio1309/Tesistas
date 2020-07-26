@@ -2,12 +2,23 @@
 
     function mostrarEspecialidad($db){
         $sql = "SELECT * FROM especialidades";
-        //var_dump($db);die();
         $especialidad = mysqli_query($db, $sql);
         
         $resultado = array();
-        if($especialidad && mysqli_num_rows($clientes) >= 1){
+        if($especialidad && mysqli_num_rows($especialidad) >= 1){
             $resultado = $especialidad;
+        }
+	
+	    return $resultado;
+    }
+
+    function mostrarPropuestas($db){
+        $sql = "SELECT * FROM propuestas";
+        $propuestas = mysqli_query($db, $sql);
+        
+        $resultado = array();
+        if($propuestas && mysqli_num_rows($propuestas) >= 1){
+            $resultado = $propuestas;
         }
 	
 	    return $resultado;
