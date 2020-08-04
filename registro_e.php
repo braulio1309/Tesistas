@@ -4,7 +4,7 @@
 		
 		$nombre=$_POST["especialidad"];
 		
-		$sql="INSERT INTO especialidad(id, nombre) VALUES (null,'$especialidad')";
+		$sql="INSERT INTO especialidades(id_especialidad, nombreEspecialidad) VALUES (null,'$nombre')";
 		$especialidad=mysqli_query($db,$sql);
 
 		if($especialidad==false){

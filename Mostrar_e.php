@@ -25,10 +25,10 @@
 						while($entrada = mysqli_fetch_assoc($entradas)):
 						?>
 							<tr>
-							<td> <?= $entrada['id'] ?> </td>	
-							<td> <?= $entrada['nombre']?> </td>
-                            <td><a href="eliminar_e.php?id=<?=$entrada['id'] ?>"><input class="btn btn-danger"type="button" value="Borrar"></a></td>
-                            <td><a href="Actualizar_e.php?id=<?=$entrada['id'] ?>"><input class="btn btn-success" type="button" value="Actualizar"></a></td>					
+							<td> <?= $entrada['id_especialidad'] ?> </td>	
+							<td> <?= $entrada['nombreEspecialidad']?> </td>
+                            <td><a href="eliminar_e.php?id=<?=$entrada['id_especialidad'] ?>"><input class="btn btn-danger"type="button" value="Borrar"></a></td>
+                            <td><a href="Actualizar_e.php?id=<?=$entrada['id_especialidad'] ?>"><input class="btn btn-success" type="button" value="Actualizar"></a></td>					
 							</tr>
 				<?php
 						endwhile;

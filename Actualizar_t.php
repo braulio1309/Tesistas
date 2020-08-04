@@ -1,12 +1,13 @@
 <?php require_once 'includes/cabecera.php'; ?>
 <?php
-    require_once 'includes/conexion.php';
-    $cedula=$_GET["cedula"];
-    $nombre=$_GET["nombre"];
-	$correo_ucab=$_GET["correo_ucab"];
-	$correo_part=$_GET["correo_part"];
-    $telefono=$_GET["telefono"];
-
+	require_once 'includes/conexion.php';
+	
+		$cedula=isset($_GET["cedula"])?$_GET["cedula"]: '' ;
+		$nombre=isset($_GET["nombre"])?$_GET["nombre"]: '' ;
+		$correo_ucab=isset($_GET["correo_ucab"])?$_GET["correo_ucab"]: '' ;
+		$correo_part=isset($_GET["correo_part"])?$_GET["correo_part"]: '' ;
+		$telefono=isset($_GET["telefono"])? $_GET["telefono"]: '' ;
+	
     if (isset($_POST["at"])){
 		$cedula=$_POST["cedula"];
 		$nombre=$_POST["nombre"];
@@ -15,8 +16,9 @@
 		$telefono=$_POST["telefono"];
         $sexo=$_POST["sexo"];
         //var_dump($nombre); die();
-		$sql="UPDATE tesistas SET (cedula ='$cedula' , nombre='$nombre' , correo_ucab='$correo_ucab', correo_part='$correo_part', telefono='$telefono', sexo='$sexo'
-               WHERE cedula='$cedula')";
+		$sql="UPDATE tesistas SET (nombre='$nombre' , correo_ucab='$correo_ucab', correo_part='$correo_part', telefono='$telefono', sexo='$sexo'
+			   WHERE cedula='$cedula')";
+			   var_dump($sql);die();
 		$tesista=mysqli_query($db,$sql);
 
 		if($tesista==false){
@@ -43,7 +45,7 @@
 					</div>
 					<div class="form-group">
 						<label for="" src="nombre">Nombre</label>
-						<input type="text" name="nombre" class="form-control" id="nombre" value="<? $nombre ?>">
+						<input type="text" name="nombre" class="form-control" id="nombre" value="<?= $nombre ?>">
 					</div>
 					<div class="form-group">
 						<label for="" src="correo_u">Correo UCAB</label>

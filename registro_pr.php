@@ -1,22 +1,83 @@
 <?php require_once 'includes/conexion.php';
 
 	if (isset($_POST["rt"])){
-		$cedula1=$_POST["cedula1"];
-		$cedula2=$_POST["cedula2"];
-		$titulo=$_POST["titulo"];
-		$nombreTutor=$_POST["nombreTutor"];
-		$nombreEmpresa=$_POST["nombreEmpresa"];
-        $experimental=$_POST["experimental"];
-        //Condiciones para ver si es experimental o no
-        //Recordar guardar las cedulas del tesista e id de propuesta en otra tabla
-		/*$sql="INSERT INTO tesistas(cedula, nombre, correo_ucab, correo_part, telefono, sexo) VALUES ('$cedula','$nombre','$correo_ucab','$correo_part','$telefono','$sexo')";
-		$tesista=mysqli_query($db,$sql);
+    //Recibimos todos los valores
+		$cedula1 = isset($_POST["cedula1"]) ? $_POST["cedula1"]: null;
+		$cedula2 = isset($_POST["cedula2"]) ? $_POST["cedula2"]: null;
+		$titulo = isset($_POST["titulo"]) ? $_POST["titulo"]: null;
+		$nombreTutor = isset($_POST["nombreTutor"]) ? $_POST["nombreTutor"]: null;
+		$nombreEmpresa = isset($_POST["nombreEmpresa"]) ? $_POST["nombreEmpresa"]: null;
+    $experimental = isset($_POST["experimental"]) ? $_POST["experimental"]: null;
 
-		if($tesista==false){
+    //Tipo de propuesta
+    if($experimental){
+      $tipo_propuesta = 'Exp';
+    }else 
+      $tipo_propuesta = 'Ins';
+    //Registramos la propuesta
+    $propuesta = "INSERT 
+    INTO 
+      propuestas(num_correlativo, f_entrega_esc, f_presentacion_comite, aprobacionComite, f_aprobacion_comite, titulo, comentario, tipo_propuesta) 
+    VALUES 
+    (8, '2020-08-04', '2020-08-04', '2020-08-04', '2020-08-04', '$titulo', ' ', '$tipo_propuesta')";
+    $propuesta = mysqli_query($db,$propuesta);
+
+    $newPropuesta = "SELECT num_correlativo FROM propuestas ORDER BY num_correlativo DESC";
+    $newPropuesta = mysqli_query($db,$newPropuesta);
+    $resultado = array();
+
+    
+    $resultado = $newPropuesta;
+    $resultado = mysqli_fetch_assoc($resultado);
+
+    $correlativo = $resultado['num_correlativo'];
+    //Guardamos si es experimental o instrumental
+    if($experimental){
+
+      $sql = "INSERT 
+      INTO 
+        experimentales(Numr_correlativo, profesorAvala) 
+      VALUES 
+        ('$correlativo','$experimental')";
+      $propuesta = mysqli_query($db,$sql);
+
+      
+    }else{
+      $sql = "INSERT 
+      INTO 
+        instrumentales(Nro_correlativo, nombreEmpresa, tutorEmpresarial) 
+      VALUES 
+        ('$correlativo','$nombreEmpresa', '$nombreTutor')";
+      $propuesta = mysqli_query($db,$sql);
+
+    }
+    //Tabla presentan
+    if($cedula1){
+      $sql = "INSERT 
+      INTO 
+        presentan(cedulaTesista, nroCorrelativo) 
+      VALUES 
+        ('$cedula1','$correlativo')";
+      $tesista = mysqli_query($db,$sql);
+    }
+
+    if($cedula2){
+      $sql2 = "INSERT 
+      INTO 
+        presentan(cedulaTesista, nroCorrelativo) 
+      VALUES 
+        ('$cedula2','$correlativo')";
+      $tesista2 = mysqli_query($db,$sql2);
+    }
+    
+
+	
+
+		if($tesista1==false){
 			var_dump('Error en la consulta');
 		}else{
 			header("Location:Mostrar_t.php");
-		}*/
+		}
 
 	}
 
@@ -86,7 +147,7 @@
     input.type = 'text';
     input.class='form-control col-sm-6';
     input.name='experimental';
-    input.placeholder = "Cédula del profesor que avala"
+    input.placeholder = "Profesor que avala"
 
     
     div.appendChild(input);
@@ -105,11 +166,11 @@
      div.class= 'row ';      
      input.type = 'text';
      input.class='form-control col-sm-6';
-     input.name='NombreEmpresa';
+     input.name='nombreEmpresa';
      input.placeholder ="Nombre de la empresa";
  
      descripcion.type = 'text';
-     descripcion.name = 'NombreTutor';
+     descripcion.name = 'nombreTutor';
      descripcion.placeholder="Nombre del tutor empresarial";
      descripcion.class='form-control col-sm-10';
  
