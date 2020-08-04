@@ -77,5 +77,4 @@
 		
 
 		
-<?php require_once 'includes/lateral.php'; ?>		
 <?php require_once 'includes/pie.php'; ?>

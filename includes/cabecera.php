@@ -33,18 +33,21 @@
 			<!-- MENU -->
 			<nav id="menu">
 				<ul>
-					<li>
-						<a href="index.php">Inicio</a>
-					</li>
 					
 					<li>
-						<a href="index.php">Tesistas</a>
+						<a href="mostrar_t.php">Tesistas</a>
 					</li>
 					<li>
-						<a href="index.php">Profesores</a>
+						<a href="mostrar_p.php">Profesores</a>
 					</li>
 					<li>
-						<a href="index.php">Jurados</a>
+						<a href="mostrar_pr.php">Propuestas</a>
+					</li>
+					<li>
+						<a href="mostrar_tr.php">Trabajos</a>
+					</li>
+					<li>
+						<a href="mostrar_e.php">Especialidades</a>
 					</li>
 				</ul>
 			</nav>

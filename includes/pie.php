@@ -4,7 +4,7 @@
 
 		<!-- PIE DE PÁGINA -->
 		<footer id="pie">
-			<p>Desarrollado por Braulio Zapata y Yohangel Lopez &copy; 2020</p>
+			<p>Sistema de base de datos I &copy; 2020</p>
 		</footer>
 		
 	</body>
