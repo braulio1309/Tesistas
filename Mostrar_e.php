@@ -11,13 +11,15 @@
 		<form action="busqueda_e.php" class="" method="POST">
 			<div class="row">
 		
-			<div class="col-sm-8">
-				<input type="text" name="parametro" placeholder="Busque alguna especialidad" class="form-control">
-			</div>
-			<div class="col-sm-4">
-				<input type="submit" class="btn btn-primary" value="Buscar">
-			</div>
-		
+				<div class="col-sm-8">
+					<input type="text" name="parametro" placeholder="Busque alguna especialidad" class="form-control">
+				</div>
+				<div class="col-sm-2">
+					<input type="submit" class="btn btn-primary" value="Buscar">
+				</div>
+				<div class="col-sm-2">
+					<a href="registro_e.php" class="btn btn-success">Nuevo</a>
+				</div>
 			</div>
 		</form>
 		<table class="table">

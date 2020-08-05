@@ -1,21 +1,24 @@
 <?php require_once 'includes/cabecera.php'; ?>
-		
-
-		
+				
 <!-- CAJA PRINCIPAL -->
 <div class="container">
     
 	<div class="container">
 		<h1>TESISTAS</h1>
-		<form action="busqueda_t.php" class="" method="POST">
+		<form action="busqueda_t.php" method="POST">
 			<div class="row">
 		
-			<div class="col-sm-8">
-				<input type="text" name="parametro" placeholder="Busque algún tesista" class="form-control">
-			</div>
-			<div class="col-sm-4">
-				<input type="submit" class="btn btn-primary" value="Buscar">
-			</div>
+				<div class="col-sm-8">
+					<input type="text" name="parametro" placeholder="Busque algún tesista" class="form-control">
+				</div>
+
+				<div class="col-sm-2">
+					<input type="submit" class="btn btn-primary" value="Buscar">
+				</div>
+
+				<div class="col-sm-2">
+					<a href="registro_t.php" class="btn btn-success">Nuevo</a>
+				</div>
 		
 			</div>
 		</form>
