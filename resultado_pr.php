@@ -37,7 +37,6 @@
 			
 			<tbody>
 				<?php 
-					$entradas = mostrarPropuestas($db);
 					if(!empty($entradas)):
 						while($entrada = mysqli_fetch_assoc($entradas)):
 						?>

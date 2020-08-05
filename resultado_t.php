@@ -6,7 +6,7 @@
 <div class="container">
     
 	<div class="container">
-		<h1>TESISTAS</h1>
+    <h1>TESISTAS</h1>
 		<form action="busqueda_t.php" class="" method="POST">
 			<div class="row">
 		
@@ -33,7 +33,7 @@
 			
 			<tbody>
 				<?php 
-					$entradas = mostrarTesistas($db);
+					
 					if(!empty($entradas)):
 						while($entrada = mysqli_fetch_assoc($entradas)):
 						?>

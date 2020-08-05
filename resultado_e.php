@@ -31,7 +31,6 @@
 			
 			<tbody>
 				<?php 
-					$entradas = mostrarEspecialidad($db);
 					if(!empty($entradas)):
 						while($entrada = mysqli_fetch_assoc($entradas)):
 						?>
