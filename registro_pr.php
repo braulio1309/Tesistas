@@ -1,5 +1,25 @@
 <?php require_once 'includes/conexion.php';
 
+  $sql = "SELECT DISTINCT
+                p.cedula_profe, p.nombreProfe 
+          FROM 
+            internos i, profesores p
+          WHERE
+            i.cedula_Profe = p.cedula_profe AND
+            p.cedula_profe NOT IN (SELECT 
+                                      p.cedula_profe 
+                                    FROM 
+                                      propuestas pr, profesores p 
+                                    WHERE 
+                                      pr.cedula_profe = p.cedula_profe 
+                                    GROUP BY 
+                                      pr.cedula_profe
+                                    HAVING
+                                        COUNT(pr.cedula_profe) < 5)";
+  $profesor = mysqli_query($db,$sql);
+  $resultado = array();
+  $resultado = $profesor;
+
 	if (isset($_POST["rt"])){
     //Recibimos todos los valores
 		$cedula1 = isset($_POST["cedula1"]) ? $_POST["cedula1"]: null;
@@ -8,6 +28,37 @@
 		$nombreTutor = isset($_POST["nombreTutor"]) ? $_POST["nombreTutor"]: null;
 		$nombreEmpresa = isset($_POST["nombreEmpresa"]) ? $_POST["nombreEmpresa"]: null;
     $experimental = isset($_POST["experimental"]) ? $_POST["experimental"]: null;
+    $cedula_profe = isset($_POST["cedula_profe"]) ? $_POST["cedula_profe"]: null;
+
+    $sql = "SELECT 
+              cedula 
+            FROM 
+              tesistas 
+            WHERE 
+              cedula = '$cedula1'";
+    $tesista = mysqli_query($db,$sql);
+    
+
+    if(mysqli_num_rows($tesista)!=1){
+      header("Location:registro_pr.php");
+      exit;
+    }
+    if($cedula2){
+      $sql = "SELECT 
+              cedula 
+            FROM 
+              tesistas 
+            WHERE 
+              cedula = '$cedula2'";
+      $tesista = mysqli_query($db,$sql);
+      if(mysqli_num_rows($tesista)!=1){
+        header("Location:registro_pr.php");
+        exit;
+      }
+    }
+
+      
+    
 
     //Tipo de propuesta
     if($experimental){
@@ -17,13 +68,15 @@
     //Registramos la propuesta
     $propuesta = "INSERT 
     INTO 
-      propuestas(num_correlativo, f_entrega_esc, f_presentacion_comite, aprobacionComite, f_aprobacion_comite, titulo, comentario, tipo_propuesta) 
+      propuestas(titulo, tipo_propuesta, cedula_profe) 
     VALUES 
-    (8, '2020-08-04', '2020-08-04', '2020-08-04', '2020-08-04', '$titulo', ' ', '$tipo_propuesta')";
+    ('$titulo', '$tipo_propuesta', '$cedula_profe')";
+    //var_dump($propuesta);die();
     $propuesta = mysqli_query($db,$propuesta);
-
+    
     $newPropuesta = "SELECT num_correlativo FROM propuestas ORDER BY num_correlativo DESC";
     $newPropuesta = mysqli_query($db,$newPropuesta);
+    
     $resultado = array();
 
     
@@ -70,16 +123,7 @@
       $tesista2 = mysqli_query($db,$sql2);
     }
     
-
-	
-
-		if($tesista1==false){
-			var_dump('Error en la consulta');
-		}else{
-			header("Location:Mostrar_t.php");
-		}
-
-	}
+  }
 
 ?>
 
@@ -93,24 +137,41 @@
 <div id="">
     
 	<div class="container">
-		<h1>REGISTRO DE TESISTA</h1>
+		<h1>REGISTRO DE PROPUESTA</h1>
 		<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" >
 			<div class="card-header">
 				<div class="container">
+
 					<div class="form-group">
 						<label for="" src="cedula">Cédula del tesista 1</label>
-						<input type="text" autofocus name="cedula1" class="form-control" id="cedula" >
+						<input type="text" autofocus name="cedula1" class="form-control" id="cedula" required>
 					</div>
 
-                    <div class="form-group">
-						<label for="" src="cedula">Cédula del tesista 2</label>
-						<input type="text" autofocus name="cedula2" class="form-control" id="cedula" >
+            <div class="form-group">
+              <label for="" src="cedula">Cédula del tesista 2</label>
+              <input type="text" autofocus name="cedula2" class="form-control" id="cedula" >
 					</div>
 
 					<div class="form-group">
 						<label for="" src="nombre">Título</label>
 						<input type="text" name="titulo" class="form-control" id="nombre">
 					</div>
+          <div class="row">
+            <div class="col-sm-12">
+                <label for="" src="cedula">Profesor revisor</label>
+                <select class="form-control" name="cedula_profe">
+                <?php 
+                
+                    while($entrada = mysqli_fetch_assoc($resultado)):
+                ?>
+                        <option value="<?=$entrada['cedula_profe']?>"><?=$entrada['nombreProfe']?></option>
+                <?php
+                    endwhile;
+                ?>
+                </select>
+            </div>
+          </div>
+          
                     <div class="row">
                         <label>Tipo de tesis</label>
                         <a class="btn btn-primary" href="#" onclick="experimental();">Experimental</a>

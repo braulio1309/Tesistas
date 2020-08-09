@@ -23,4 +23,33 @@
 	
 	    return $resultado;
     }
+
+    function mostrartrabajos($db){
+        $sql = "SELECT 
+                    t.id_tg, p.titulo, t.nroConsejo, t.Fecha_presentacion, t.horaPresentacion, t.fechaAprobacion, t.tipo_formato 
+                FROM 
+                    trabajos t, propuestas p 
+                WHERE 
+                    t.nroCorrelativo = p.num_correlativo";
+        $propuestas = mysqli_query($db, $sql);
+       
+        $resultado = array();
+        if($propuestas && mysqli_num_rows($propuestas) >= 1){
+            $resultado = $propuestas;
+        }
+	
+	    return $resultado;
+    }
+
+    function mostrarProfesores($db){
+        $sql = "SELECT * FROM profesores";
+        $propuestas = mysqli_query($db, $sql);
+        
+        $resultado = array();
+        if($propuestas && mysqli_num_rows($propuestas) >= 1){
+            $resultado = $propuestas;
+        }
+	
+	    return $resultado;
+    }
 ?>

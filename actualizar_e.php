@@ -1,22 +1,29 @@
 <?php require_once 'includes/cabecera.php'; ?>
 <?php
     require_once 'includes/conexion.php';
-    $id = $_GET["id"];
-    $sql="SELECT * FROM especialidades WHERE id_especialidad ='$id' ";
-	$especidalidad=mysqli_query($db,$sql);
-	
+	$id = $_GET["id"];
+		
+    $sql="SELECT * FROM especialidades WHERE id_especialidad = '$id' ";
+	$especidalidad = mysqli_query($db,$sql);
+
     $resultado = array();
 	$resultado = $especidalidad;
-	var_dump($resultado);die();
-    if (isset($_POST["at"])){
-		$nombre=$_POST["nombre"];
-		$sql="UPDATE especialidades SET (nombreEspecialidad ='$nombre' WHERE id_especialidad='$id')";
-		$final=mysqli_query($db,$sql);
+	$resultado = mysqli_fetch_assoc($resultado);
 
+    if (isset($_POST["at"])){
+		$nombre = $_POST["nombre"];
+		$sql="UPDATE 
+				especialidades 
+			SET 
+				nombreEspecialidad ='$nombre' 
+			WHERE 
+				id_especialidad='$id'";
+		$final=mysqli_query($db,$sql);
+		
 		if($final==false){
 			var_dump('Error en la consulta');
 		}else{
-			header("Location:Mostrar_t.php");
+			header("Location:Mostrar_e.php");
 		}
 
 	}
