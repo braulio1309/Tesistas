@@ -41,7 +41,7 @@
 				<div class="container">
 					<div class="form-group">
 						<label for="" src="cedula">Cedula</label>
-						<input type="text" autofocus name="cedula" class="form-control" id="cedula" value="<?=$cedula ?>">
+						<input type="text" autofocus name="cedula" class="form-control" id="cedula" value="<?=$cedula ?>" readonly>
 					</div>
 					<div class="form-group">
 						<label for="" src="nombre">Nombre</label>

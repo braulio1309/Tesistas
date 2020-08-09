@@ -6,7 +6,7 @@
             internos i, profesores p
           WHERE
             i.cedula_Profe = p.cedula_profe AND
-            p.cedula_profe NOT IN (SELECT 
+            p.cedula_profe IN (SELECT 
                                       p.cedula_profe 
                                     FROM 
                                       propuestas pr, profesores p 

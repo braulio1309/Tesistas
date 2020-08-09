@@ -26,7 +26,7 @@
 
     function mostrartrabajos($db){
         $sql = "SELECT 
-                    t.id_tg, p.titulo, t.nroConsejo, t.Fecha_presentacion, t.horaPresentacion, t.fechaAprobacion, t.tipo_formato 
+                    t.id_tg, p.titulo, t.nroConsejo, t.Fecha_presentacion, t.horaPresentacion, t.fechaAprobacion, t.tipo_formato, t.nroCorrelativo
                 FROM 
                     trabajos t, propuestas p 
                 WHERE 
@@ -52,4 +52,102 @@
 	
 	    return $resultado;
     }
+
+    function PropuestasAprobadas($db){
+        $sql = "SELECT * FROM propuestas p WHERE aprobacionComite = 'APROBADO'";
+        $propuestas = mysqli_query($db, $sql);
+        
+        $resultado = array();
+        if($propuestas && mysqli_num_rows($propuestas) >= 1){
+            $resultado = $propuestas;
+        }
+	
+	    return $resultado;
+    }
+
+    function PropuestasReprobadas($db){
+        $sql = "SELECT * FROM propuestas p WHERE aprobacionComite = 'REPROBADO'";
+        $propuestas = mysqli_query($db, $sql);
+        
+        $resultado = array();
+        if($propuestas && mysqli_num_rows($propuestas) >= 1){
+            $resultado = $propuestas;
+        }
+	
+	    return $resultado;
+    }
+
+    function PropuestasPendientes($db){
+        $sql = "SELECT * FROM propuestas WHERE aprobacionComite IS NULL OR aprobacionComite = 'PENDIENTE'";
+        $propuestas = mysqli_query($db, $sql);
+        
+        $resultado = array();
+        if($propuestas && mysqli_num_rows($propuestas) >= 1){
+            $resultado = $propuestas;
+        }
+	
+	    return $resultado;
+    }
+
+    function PropuestaInstrumental($db){
+        $sql = "SELECT * FROM propuestas WHERE tipo_propuesta = 'Ins'";
+        $propuestas = mysqli_query($db, $sql);
+        
+        $resultado = array();
+        if($propuestas && mysqli_num_rows($propuestas) >= 1){
+            $resultado = $propuestas;
+        }
+	
+	    return $resultado;
+    }
+
+    function PropuestaExperimental($db){
+        $sql = "SELECT * FROM propuestas WHERE tipo_propuesta = 'Exp'";
+        $propuestas = mysqli_query($db, $sql);
+        
+        $resultado = array();
+        if($propuestas && mysqli_num_rows($propuestas) >= 1){
+            $resultado = $propuestas;
+        }
+	
+	    return $resultado;
+    }
+
+    function TrabajosExperimental($db){
+        $sql = "SELECT 
+                    t.id_tg, t.nroCorrelativo, t.nroConsejo, p.titulo, t.Fecha_presentacion, t.horaPresentacion, t.fechaAprobacion
+                FROM 
+                    trabajos t, propuestas p 
+                WHERE 
+                    p.tipo_propuesta = 'Exp' AND
+                    t.nroCorrelativo = p.num_correlativo";
+        $propuestas = mysqli_query($db, $sql);
+        
+        $resultado = array();
+        if($propuestas && mysqli_num_rows($propuestas) >= 1){
+            $resultado = $propuestas;
+        }
+	
+	    return $resultado;
+    }
+
+    function TrabajosInstrumental($db){
+        $sql = "SELECT 
+                    t.id_tg, t.nroCorrelativo, t.nroConsejo, p.titulo, t.Fecha_presentacion, t.horaPresentacion, t.fechaAprobacion
+                FROM 
+                    trabajos t, propuestas p 
+                WHERE 
+                    p.tipo_propuesta = 'Ins' AND
+                    t.nroCorrelativo = p.num_correlativo";
+        $propuestas = mysqli_query($db, $sql);
+        
+        $resultado = array();
+        if($propuestas && mysqli_num_rows($propuestas) >= 1){
+            $resultado = $propuestas;
+        }
+	
+	    return $resultado;
+    }
+
+    
 ?>

@@ -59,7 +59,7 @@
 			
 			<tbody>
 				<?php 
-					$entradas = mostrarPropuestas($db);
+					$entradas = PropuestaExperimental($db);
 					if(!empty($entradas)):
 						while($entrada = mysqli_fetch_assoc($entradas)):
 						?>

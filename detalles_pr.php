@@ -1,7 +1,7 @@
 <?php require_once 'includes/cabecera.php'; ?>
 <?php
-    require_once 'includes/conexion.php';
-	$id = $_GET["id"];
+	require_once 'includes/conexion.php';
+	$id = isset($_GET["id"])? $_GET["id"]: null;
 		
     $sql="SELECT 
 			pr.num_correlativo, pr.f_entrega_esc, pr.f_presentacion_comite, pr.aprobacionComite, pr.f_aprobacion_comite, pr.titulo, pr.tipo_propuesta, p.nombreProfe, pr.comentario
@@ -28,16 +28,83 @@
 	$tesistas = $tesista;
 
     if (isset($_POST["at"])){
-		$nombre = $_POST["nombre"];
-		$sql="UPDATE especialidades SET (nombreEspecialidad ='$nombre' WHERE id_especialidad='$id')";
-		$final=mysqli_query($db,$sql);
 
-		if($final==false){
-			var_dump('Error en la consulta');
+		$id = isset($_POST["id"]) ? $_POST["id"]: null;
+		$titulo = isset($_POST["titulo"]) ? $_POST["titulo"]: null;
+		$nota = isset($_POST["nota"]) ? $_POST["nota"]: null;
+		$titulo = isset($_POST["titulo"]) ? $_POST["titulo"]: null;
+		$nombreTutor = isset($_POST["nombreTutor"]) ? $_POST["nombreTutor"]: null;
+		$nombreEmpresa = isset($_POST["nombreEmpresa"]) ? $_POST["nombreEmpresa"]: null;
+		$f_entrega_esc = isset($_POST["f_entrega_esc"]) ? $_POST["f_entrega_esc"]: null;
+		$f_aprobacion_comite = isset($_POST["f_aprobacion_comite"]) ? $_POST["f_aprobacion_comite"]: null;
+		$f_presentacion_comite = isset($_POST["f_presentacion_comite"]) ? $_POST["f_presentacion_comite"]: null;
+		$profesorAvala = isset($_POST["profesorAvala"]) ? $_POST["profesorAvala"]: null;
+		
+		$sql = "UPDATE propuestas
+				SET 
+					f_entrega_esc = '$f_entrega_esc', f_presentacion_comite = '$f_presentacion_comite', aprobacionComite = '$nota', f_aprobacion_comite = '$f_aprobacion_comite', titulo = '$titulo'
+				WHERE 
+					num_correlativo = '$id'; ";
+		$update = mysqli_query($db,$sql);
+		
+
+		if($resultado['tipo_propuesta'] == "Ins"){
+			$sql = "UPDATE instrumentales
+			SET 
+				nombreEmpresa = '$nombreEmpresa', tutorEmpresarial = '$nombreTutor'
+			WHERE 
+				num_correlativo = '$id';  ";
+			$instrumental = mysqli_query($db,$sql);
+			
 		}else{
-			header("Location:Mostrar_t.php");
+			$sql = "UPDATE experimentales
+			SET 
+				profesorAvala = '$profesorAvala'
+			WHERE 
+				numr_correlativo = '$id';";
+			$experimental = mysqli_query($db,$sql);
 		}
+		
+		$sql = "SELECT * FROM propuestas WHERE num_correlativo = '$id'";
+		$propuesta = mysqli_query($db,$sql);
+		$final = array();
+		$final = $propuesta;
 
+		$result = mysqli_fetch_assoc($final);
+		
+		//Cuando la propuesta esta aprobado se crea el trabajo
+		if($result['aprobacionComite'] == 'APROBADO'){
+			$sql = "INSERT 
+						INTO 
+							trabajos(nroCorrelativo) 
+						VALUES 
+							('$id')";
+			$final = mysqli_query($db,$sql);
+			
+			$sql = "SELECT * FROM trabajos ORDER BY id_tg DESC";
+			$trabajo = mysqli_query($db,$sql);
+			$tra = array();
+			$tra = $trabajo;
+			$tra = mysqli_fetch_assoc($tra);
+
+			$id_trabajo = $tra['id_tg'];
+			if($result['tipo_propuesta'] == 'Ins'){
+				$sql = "INSERT 
+						INTO 
+							instrumentales_tg(id_tg) 
+						VALUES 
+							('$id_tg')";
+				$final = mysqli_query($db,$sql);
+
+			}else{
+				$sql = "INSERT 
+						INTO 
+							experimentales_tg(id_tg) 
+						VALUES 
+							('$id_tg')";
+				$final = mysqli_query($db,$sql);
+			}
+		}
 	}
 
 ?>
@@ -46,6 +113,7 @@
 		<h1>Actualización de propuesta</h1>
 		<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" >
 			<div class="card-header">
+
 				<div class="container">
 				<?php 
                                 
@@ -53,7 +121,9 @@
                 ?>
 					<div class="form-group">
 						<label  src="cedula">Autor</label>
-						<input type="text"  autofocus name="cedula1" class="form-control" value="<?=$tesi['nombre']?>" readonly>
+						<input type="text"  class="form-control" value="<?=$tesi['nombre']?>" readonly>
+						<input type="hidden" name="id" class="form-control" value="<?=$resultado['num_correlativo']?>" readonly>
+
 					</div>
 				<?php
 					endwhile;
@@ -74,34 +144,51 @@
 
 					<div class="row">
 						<div class="col-sm-12">
-							<label>Tutor </label>
 							<div class="form-group">
 								<label  src="cedula">Tutor</label>
-								<input type="text"  autofocus name="cedula1" class="form-control" value="<?=$resultado['nombreProfe']?>" readonly>
+								<input type="text" class="form-control" value="<?=$resultado['nombreProfe']?>" readonly>
 							</div>
 						</div>
                     </div>
-
+					<?php
+						if($resultado['aprobacionComite'] == 'APROBADO' ):
+					?>
 					<div class="row">
 						<div class="col-sm-12">
 							<label>Calificación de comité</label>
-							<input type="text" class="form-control"  value="<?=$resultado['aprobacionComite']?>" readonly>
+							<input type="text" name ="nota" class="form-control"  value="<?=$resultado['aprobacionComite']?>" readonly>
 						</div>
+					<?php
+						else:
+					?>
+							<div class="row">
+							<div class="col-sm-12">
+								<label>Calificación de comité</label>
+								<select name="nota" class="form-control">
+									<option value="APROBADO">PENDIENTE</option>
+									<option value="APROBADO">APROBADO</option>
+									<option value="APROBADO">REPROBADO</option>
+								</select>
+							</div>
+					<?php
+						endif;
+					?>
+					
                         
                     </div>
 
 					<div class="row">
 						<div class="col-sm-4">
 							<label>Fecha entrega escuela</label>
-							<input type="text" class="form-control" value="<?=$resultado['f_entrega_esc']?>" >
+							<input type="date" name="f_entrega_esc" class="form-control" value="<?=$resultado['f_entrega_esc']?>" >
 						</div>
 						<div class="col-sm-4">
 							<label>fecha presentación comité</label>
-							<input type="text" class="form-control" value="<?=$resultado['f_presentacion_comite']?>">
+							<input type="date" name="f_presentacion_comite" class="form-control" value="<?=$resultado['f_presentacion_comite']?>">
 						</div>
 						<div class="col-sm-4">
 							<label>fecha aprobación comité</label>
-							<input type="text" class="form-control" value="<?=$resultado['f_aprobacion_comite']?>" >
+							<input type="date" name="f_aprobacion_comite" class="form-control" value="<?=$resultado['f_aprobacion_comite']?>" >
 						</div>
 					</div>
 
@@ -111,18 +198,18 @@
 						?>
 							<div class="col-sm-6">
 								<label>Nombre Empresa</label>
-								<input type="text" class="form-control" value="#" >	
+								<input type="text" name="nombreEmpresa" class="form-control" value="" >	
 							</div>
 							<div class="col-sm-6">
 								<label>Tutor Empresa</label>
-								<input type="text" class="form-control" value="#" >	
+								<input type="text" name="nombreTutor" class="form-control" value="" >	
 							</div>
 						<?php
 							else: 
 						?>
 							<div class="col-sm-6">
 								<label>Profesor que avala</label>
-								<input type="text" class="form-control" value="#" >	
+								<input type="text" name="profesorAvala" class="form-control" value="" >	
 							</div>
 						<?php
 							endif;
@@ -134,7 +221,7 @@
 					
 					<div class="form-group">
 					
-					<input type="submit" class="btn btn-primary" name="rt" id="rt" value="Registrar Propuesta">
+					<input type="submit" class="btn btn-primary" name="at" id="rt" value="Registrar Propuesta">
 				</div>
 			</div>
 		</form>

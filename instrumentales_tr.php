@@ -37,14 +37,13 @@
 				<th>Fecha presentación</th>
                 <th>Hora presentación</th>
                 <th>Fecha aprobación</th>
-                <th>Tipo</th>
                 <th>&nbsp</th>
                 <th>&nbsp</th>
 		    </thead>		
 			
 			<tbody>
 				<?php 
-                    $entradas = mostrartrabajos($db);
+                    $entradas = TrabajosInstrumental($db);
                    
 					if(!empty($entradas)):
 						while($entrada = mysqli_fetch_assoc($entradas)):
@@ -56,7 +55,6 @@
 							<td> <?= $entrada['Fecha_presentacion']?> </td>	
                             <td> <?= $entrada['horaPresentacion']?> </td>
                             <td> <?= $entrada['fechaAprobacion']?> </td>
-							<td> <?= $entrada['tipo_formato']?> </td>
 
                             <td><a href="eliminar_tr.php?id=<?=$entrada['id_tg'] ?>"><input class="btn btn-danger"type="button" value="Borrar"></a></td>
                             <td><a href="detalles_tr.php?id=<?=$entrada['id_tg'] ?>& num_correlativo=<?=$entrada['nroCorrelativo']?>"><input class="btn btn-success" type="button" value="Detalles"></a></td>					
