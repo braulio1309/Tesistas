@@ -51,6 +51,9 @@
 					<li>
 						<a href="mostrar_e.php">Formatos</a>
 					</li>
+					<li>
+						<a href="cerrar_sesion.php">Cerrar Sesion</a>
+					</li>
 				</ul>
 			</nav>
 			
