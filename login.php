@@ -10,6 +10,8 @@ if (isset($_POST["is"])){
 	$count = mysqli_num_rows($result);
   
 		if($count == 1) {
+			session_start();
+			$_SESSION["usuario"]=$_POST["login"];
 		   header("location:Mostrar_t.php");
 		}else {
 			header("location:login.php");
