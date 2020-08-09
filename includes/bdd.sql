@@ -15,7 +15,7 @@ NOT NULL;
 
 CREATE DOMAIN Fecha AS date;
 
-CREATE DOMAIN TextoL AS varchar(50);
+CREATE DOMAIN TextoL AS varchar(100);
 
 CREATE DOMAIN TextoM AS varchar(30)
 NOT NULL;
@@ -68,7 +68,7 @@ On Profesores(telefonoProfe);
 CREATE TABLE Formatos(
 	id_formato serial,
 	nombre Nombres,
-	tipo_formato_evaluacion int,
+    tipo_formato varchar(15),
 	primary key(id_formato)
 );
 
@@ -162,117 +162,56 @@ CREATE TABLE Especialidades(
 	primary key(id_especialidad)
 );
 
-CREATE TABLE Formatos_TIG(
-	id_formato int unique not null,
-	num_correlativo int not null,
-	resultado_revisor Notas,
-	id_tg int not null,
-	resul_jurado_tig1 Notas,
-	resul_jurado_tig2 Notas,
-	resul_tutor_tig Notas,
-	resul_fina_tigl Notas
-);
-
-ALTER TABLE Formatos_TIG
-ADD CONSTRAINT Fk_idformato
-FOREIGN KEY(id_formato)
-REFERENCES Formatos(id_formato);
-
-ALTER TABLE Formatos_TIG
-ADD CONSTRAINT Fk_numcorrelativo
-FOREIGN KEY(num_correlativo)
-REFERENCES Instrumentales(Nro_correlativo);
-
-ALTER TABLE Formatos_TIG
-ADD CONSTRAINT Fk_id_tg
-FOREIGN KEY(id_tg)
-REFERENCES TIG(id_tg);
-
-CREATE TABLE Formatos_TEG(
-	id_formato int unique not null,
-	num_correlativo int not null,
-	resultado_revisor Notas,
-	id_tg int not null,
-	resul_jurado_tig1 Notas,
-	resul_jurado_tig2 Notas,
-	resul_tutor_tig Notas,
-	resul_fina_tigl Notas
-);
-
-ALTER TABLE Formatos_TEG
-ADD CONSTRAINT Fk_idformato
-FOREIGN KEY(id_formato)
-REFERENCES Formatos(id_formato);
-
-ALTER TABLE Formatos_TEG
-ADD CONSTRAINT Fk_numcorrelativo
-FOREIGN KEY(num_correlativo)
-REFERENCES Experimentales(Numr_correlativo);
-
-ALTER TABLE Formatos_TEG
-ADD CONSTRAINT Fk_id_tg
-FOREIGN KEY(id_tg)
-REFERENCES TEG(id_tg);
-
-CREATE TABLE Formato_Tutor_Tig(
+CREATE TABLE formato_tutor_tig(
     id_formato int
 );
 
-ALTER TABLE Formato_Tutor_Tig
+ALTER TABLE formato_tutor_tig
 ADD CONSTRAINT FK_IdformatoT
 FOREIGN KEY (id_formato)
 REFERENCES Formatos(id_formato);
 
-CREATE TABLE Formato_Tutor_Tig(
+CREATE TABLE formato_tutor_teg(
     id_formato int
 );
 
-ALTER TABLE Formato_Tutor_Tig
+ALTER TABLE formato_tutor_teg
 ADD CONSTRAINT FK_IdformatoTI
 FOREIGN KEY (id_formato)
 REFERENCES Formatos(id_formato);
 
-CREATE TABLE Formato_Tutor_Teg(
+CREATE TABLE formato_revisor_tig(
     id_formato int
 );
 
-ALTER TABLE Formato_Tutor_Teg
-ADD CONSTRAINT FK_IdformatoTE
-FOREIGN KEY (id_formato)
-REFERENCES Formatos(id_formato);
-
-CREATE TABLE Formato_revisor_Tig(
-    id_formato int
-);
-
-ALTER TABLE Formato_revisor_Tig
+ALTER TABLE formato_revisor_tig
 ADD CONSTRAINT FK_IdformatoTRI
 FOREIGN KEY (id_formato)
 REFERENCES Formatos(id_formato);
 
-CREATE TABLE Formato_revisor_Teg(
+CREATE TABLE formato_revisor_teg(
     id_formato int
 );
 
-ALTER TABLE Formato_revisor_Teg
+ALTER TABLE formato_revisor_teg
 ADD CONSTRAINT FK_IdformatoTRE
 FOREIGN KEY (id_formato)
 REFERENCES Formatos(id_formato);
 
-CREATE TABLE Formato_jurado_Tig(
+CREATE TABLE formato_jurado_tig(
     id_formato int
 );
 
-ALTER TABLE Formato_jurado_Tig
+ALTER TABLE formato_jurado_tig
 ADD CONSTRAINT FK_IdformatoTJI
 FOREIGN KEY (id_formato)
 REFERENCES Formatos(id_formato);
 
-CREATE TABLE Formato_jurado_Teg(
+CREATE TABLE formato_jurado_teg(
     id_formato int
 );
 
-ALTER TABLE Formato_jurado_Teg
+ALTER TABLE formato_jurado_teg
 ADD CONSTRAINT FK_IdformatoTJE
 FOREIGN KEY (id_formato)
 REFERENCES Formatos(id_formato);
@@ -358,24 +297,68 @@ ADD CONSTRAINT FK_IDTr
 FOREIGN KEY(id_tg)
 REFERENCES Trabajos(id_tg);
 
-CREATE TABLE Criterios_TIG(
+CREATE TABLE criterios_tutor_tig(
 	id_formato int not null,
 	criterios TextoL,
 	primary key(id_formato)
 );
 
-ALTER TABLE Criterios_TIG
-ADD CONSTRAINT FK_Idformato
+ALTER TABLE criterios_tutor_tig
+ADD CONSTRAINT FK_IdformatoCTTIG
 FOREIGN KEY (id_formato)
-REFERENCES Formatos_TIG(id_formato);
+REFERENCES formato_tutor_tig(id_formato);
 
-CREATE TABLE Criterios_TEG(
+CREATE TABLE criterios_tutor_teg(
 	id_formato int not null,
 	criterios TextoL,
 	primary key(id_formato)
 );
 
-ALTER TABLE Criterios_TEG
-ADD CONSTRAINT FK_Idformato
+ALTER TABLE criterios_tutor_teg
+ADD CONSTRAINT FK_IdformatoCTTEG
 FOREIGN KEY (id_formato)
-REFERENCES Formatos_TEG(id_formato);
+REFERENCES formato_tutor_teg(id_formato);
+
+CREATE TABLE criterios_revisor_tig(
+	id_formato int not null,
+	criterios TextoL,
+	primary key(id_formato)
+);
+
+ALTER TABLE criterios_revisor_tig
+ADD CONSTRAINT FK_IdformatoCRTIG
+FOREIGN KEY (id_formato)
+REFERENCES formato_revisor_tig(id_formato);
+
+CREATE TABLE criterios_revisor_teg(
+	id_formato int not null,
+	criterios TextoL,
+	primary key(id_formato)
+);
+
+ALTER TABLE criterios_revisor_teg
+ADD CONSTRAINT FK_IdformatoCRTEG
+FOREIGN KEY (id_formato)
+REFERENCES formato_revisor_teg(id_formato);
+
+CREATE TABLE criterios_jurado_tig(
+	id_formato int not null,
+	criterios TextoL,
+	primary key(id_formato)
+);
+
+ALTER TABLE criterios_jurado_tig
+ADD CONSTRAINT FK_IdformatoCJTIG
+FOREIGN KEY (id_formato)
+REFERENCES formato_jurado_tig(id_formato);
+
+CREATE TABLE criterios_jurado_teg(
+	id_formato int not null,
+	criterios TextoL,
+	primary key(id_formato)
+);
+
+ALTER TABLE criterios_jurado_teg
+ADD CONSTRAINT FK_IdformatoCJTEG
+FOREIGN KEY (id_formato)
+REFERENCES formato_jurado_teg(id_formato);
