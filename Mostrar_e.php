@@ -1,7 +1,6 @@
 <?php require_once 'includes/cabecera.php'; ?>
 <?php require_once 'includes/braulio.php'; ?>
-
-
+<?php require_once 'includes/comprobar_login.php';?>
 		
 <!-- CAJA PRINCIPAL -->
 <div class="container">

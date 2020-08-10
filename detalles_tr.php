@@ -1,4 +1,6 @@
 <?php require_once 'includes/cabecera.php'; ?>
+<?php require_once 'includes/comprobar_login.php';?>
+
 <?php
     require_once 'includes/conexion.php';
 	$id = isset($_GET["id"]) ? $_GET["id"]: null;
