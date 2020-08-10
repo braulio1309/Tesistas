@@ -49,7 +49,7 @@
 						<a href="mostrar_e.php">Especialidades</a>
 					</li>
 					<li>
-						<a href="mostrar_e.php">Formatos</a>
+						<a href="mostrar_f.php">Formatos</a>
 					</li>
 				</ul>
 			</nav>

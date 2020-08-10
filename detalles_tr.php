@@ -37,7 +37,7 @@
 			 SET 
 			 	nroConsejo = $consejo, Fecha_presentacion ='$fecha', horaPresentacion = '$hora'
 			WHERE id_tg='$id'";
-		var_dump($sql);die();
+		var_dump($sql);die(); //Error
 
 		$final=mysqli_query($db,$sql);
 
