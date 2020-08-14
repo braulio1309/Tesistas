@@ -1,6 +1,5 @@
-
-
 <?php require_once 'includes/cabecera.php'; ?>
+<!-- BOTONES PARA ACCEDER A LAS PROPUESTAS DESEADA -->
 <div class="row">
     <div class="col-sm-2">
 		<a href="instrumentales_pr.php" class="btn btn-primary">Instrumental</a>
@@ -59,6 +58,7 @@
 			
 			<tbody>
 				<?php 
+					// SE LLAMA A LA FUNCION PROPUESTAS APROBADAS
 					$entradas = PropuestasAprobadas($db);
 					if(!empty($entradas)):
 						while($entrada = mysqli_fetch_assoc($entradas)):

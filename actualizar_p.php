@@ -1,6 +1,8 @@
 <?php require_once 'includes/conexion.php';
 
-    $id = isset($_GET['id'])?$_GET['id']:null;
+	$id = isset($_GET['id'])?$_GET['id']:null;
+
+	// SI EXISTE LA CEDULA DE PROFESOR SE OBTIENEN TODOS LOS DATOS DEL PROFESOR
     if($id){
         $sql = "SELECT * FROM profesores WHERE cedula_profe = $id ";
         $profesor=mysqli_query($db,$sql);
@@ -10,14 +12,15 @@
         $resultado = mysqli_fetch_assoc($resultado);
     }
     
-
+	// SI PRESION EL BOTON DE ACTUALIZAR DATOS SE GUARDAN LOS DATOS EN UNA VARIABLA
 	if (isset($_POST["rt"])){
         $nombre = $_POST ["nombre"];
         $id     = $_POST ["id"];
         $tlf    = $_POST ["tlf"];
         $correo = $_POST ["correo"];
 		$dir    = $_POST ["dir"];
-    
+	
+		// ACTUALIZA LOS DATOS DEL PROFESOR
 		$sql="UPDATE 
                 profesores 
               SET 

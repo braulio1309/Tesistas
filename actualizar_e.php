@@ -12,11 +12,12 @@
 		$resultado = mysqli_fetch_assoc($resultado);
 	}
     
-
+	// SI PRESIONAN ACTUALIZAR DATOS LOS DATOS INTRODUCIDOS SE GUARDAN EN UNA VARIABLE.
     if (isset($_POST["at"])){
 		$nombre = $_POST["nombre"];
 		$id = $_POST["id"];
 
+		// ACTUALIZA DATOS DE LA ESPECIALIDADES
 		$sql="UPDATE 
 				especialidades 
 			SET 
@@ -51,7 +52,6 @@
 					<input type="hidden" class="btn btn-primary" name="id" id="rt" value="<?=$resultado['id_especialidad']?>">
 
 					<input type="submit" class="btn btn-primary" name="at" id="rt" value="Actualizar Datos">
-					<a href="eliminar_e.php?id=<?=$resultado['id_especialidad'] ?>"><input class="btn btn-danger"type="button" value="Borrar"></a>
 				</div>
 			</div>
 		</form>

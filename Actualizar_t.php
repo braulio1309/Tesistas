@@ -3,7 +3,7 @@
 	require_once 'includes/conexion.php';
 	
 		$cedula=isset($_GET["cedula"])?$_GET["cedula"]: '' ;
-
+		//SE OBTIENEN TODOS LOS DATOS DEL TESISTA A TRAVES DE LA CEDULA
 		$sql="SELECT * FROM tesistas WHERE cedula = '$cedula' ";
 		$tesista = mysqli_query($db,$sql);
 
@@ -12,14 +12,15 @@
 		$resultado = mysqli_fetch_assoc($resultado);
 
 	
-	
+	// SI SE PRESIONA ACTUALIZAR DATOS CADA VALOR SE GUARDA EN UNA VARIABLE
     if (isset($_POST["at"])){
 		$cedula=$_POST["cedula"];
 		$nombre=$_POST["nombre"];
 		$correo_ucab=$_POST["correo_ucab"];
 		$correo_part=$_POST["correo_part"];
 		$telefono=$_POST["telefono"];
-        $sexo=$_POST["sexo"];
+		$sexo=$_POST["sexo"];
+		// ACTUALIZA LOS DATOS DEL TESISTA
 		$sql="UPDATE tesistas SET nombre='$nombre' , correo_ucab='$correo_ucab', correo_part='$correo_part', telefono='$telefono', sexo='$sexo'
 			   WHERE cedula='$cedula'";
 		$tesista=mysqli_query($db,$sql);
