@@ -1,7 +1,7 @@
 CREATE DATABASE Sistema_Automatizado;
 
 CREATE DOMAIN aprob_comite as varchar(10)
-CHECK (value='Aprobado' or value='Reprobado');
+CHECK (value='APROBADO' or value='REPROBADO' or value='NULL');
 
 CREATE DOMAIN TipoPropuesta AS varchar(13)
 CHECK (value='Instrumental' or value='Experimental')
@@ -115,12 +115,12 @@ CREATE TABLE Formatos(
 CREATE TABLE Trabajos(
 	id_tg serial unique ,
 	cedula_tutor CedulaP,
-	num_correlativo int not null,
+	nroCorrelativo int not null,
 	nroConsejo int,
 	Fecha_presentacion Fecha,
 	horaPresentacion time,
 	fechaAprobacion	Fecha,
-	primary key(id_tg, num_correlativo)
+	primary key(id_tg, nroCorrelativo)
 );
 
 ALTER TABLE Trabajos
@@ -130,32 +130,32 @@ REFERENCES INTERNOS(cedula_Profe);
 
 ALTER TABLE Trabajos
 ADD CONSTRAINT FK_Nro_Co
-FOREIGN KEY (num_correlativo)
+FOREIGN KEY (nroCorrelativo)
 REFERENCES Propuestas(num_correlativo);
 
 
 CREATE TABLE Instrumentales(
-	num_correlativo int not null,
+	Nro_correlativo int not null,
 	nombreEmpresa  TextoM,
 	tutorEmpresarial TextoM,
-	primary key(num_correlativo)
+	primary key(Nro_correlativo)
 );
 
 ALTER TABLE Instrumentales
 ADD CONSTRAINT FK_NroCorrel
-FOREIGN KEY (num_correlativo)
+FOREIGN KEY (Nro_correlativo)
 REFERENCES Propuestas(num_correlativo);
 
 
 CREATE TABLE Experimentales(
-	num_correlativo int not null,
+	Numr_correlativo int not null,
 	profesorAvala Nombres,
-	primary key(num_correlativo)
+	primary key(numr_correlativo)
 );
 
 ALTER TABLE Experimentales
 ADD CONSTRAINT FK_NumrCorre
-FOREIGN KEY (num_correlativo)
+FOREIGN KEY (Numr_correlativo)
 REFERENCES Propuestas(num_correlativo);
 
 CREATE TABLE TIG(
@@ -239,13 +239,13 @@ REFERENCES Formatos(id_formato);
 
 CREATE TABLE Presentan(
 	cedulaTesista CedulaP,
-	num_correlativo int not null,
-	primary key(cedulaTesista, num_correlativo)
+	nroCorrelativo int not null,
+	primary key(cedulaTesista, nroCorrelativo)
 );
 
 ALTER TABLE Presentan
 ADD CONSTRAINT FK_NroCorrel
-FOREIGN KEY (num_correlativo)
+FOREIGN KEY (nroCorrelativo)
 REFERENCES Propuestas(num_correlativo);
 
 ALTER TABLE Presentan
@@ -349,4 +349,3 @@ ALTER TABLE criterios_jurado_teg
 ADD CONSTRAINT FK_IdformatoCJTEG
 FOREIGN KEY (id_formato)
 REFERENCES formato_jurado_teg(id_formato);
-
