@@ -12,7 +12,7 @@
                 trabajos t, propuestas p 
             WHERE 
                 t.nroCorrelativo = p.num_correlativo AND
-                t.id_tg = '$id'";
+                t.id_tg = $id";
     $propuestas = pg_Exec($db, $sql);
 	
 	$sql = "SELECT 
@@ -24,7 +24,7 @@
 				p.cedulaTesista = t.cedula";
 	$tesista = pg_Exec($db,$sql);
 	$filas = pg_numRows($tesista);
-
+	
     if (isset($_POST["at"])){
 		$id = $_POST['id'];
 		$consejo = isset($_POST["consejo"])?$_POST['consejo']:null;
@@ -55,29 +55,30 @@
 		<h1>Actualización de trabajo</h1>
 		<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" >
 			<div class="card-header">
-				<div class="container">
+				
 				<?php 
                                 
 					for ($j=0; $j < $filas; $j++):
 				?>
 					<div class="form-group">
 						<label  src="cedula">Autor</label>
-						<input type="text"  class="form-control" value="<?=$pg_result($tesista,$j, 0)?>" readonly>
-						<input type="hidden" name="id" class="form-control" value="<?=$num_correlativo?>" readonly>
+						<input type="text" class="form-control" value="<?=$pg_result($tesista,$j, 0)?>" readonly>
 
 					</div>
 				<?php
 					endfor;
 				?>
+<input type="hidden" name="id" class="form-control" value="<?=$num_correlativo?>" readonly>
+
 					<div class="form-group">
 						<label for="" src="nombre">Título</label>
-						<input type="text" name="titulo" class="form-control" value="<?=$pg_result($propuesta,0, 1)?>" readonly>
+						<input type="text" name="titulo" class="form-control" value="<?=$pg_result($propuestas,0, 1)?>" readonly>
 					</div>
 
                     <div class="row">
 						<div class="col-sm-12">
 							<label>Número de consejo</label>
-							<input type="number" name="consejo" class="form-control"  value="<?=$pg_result($propuesta,0, 2)?>" >
+							<input type="number" name="consejo" class="form-control"  value="<?=$pg_result($propuestas,0, 2)?>" >
 						</div>
                     </div>
 
@@ -85,16 +86,16 @@
 					<div class="row">
 						<div class="col-sm-4">
 							<label>Fecha de presentación</label>
-							<input type="date" name="fecha" class="form-control" value="<?=$pg_result($tesista,$j, 3)?>" >
+							<input type="date" name="fecha" class="form-control" value="<?=$pg_result($propuestas,0, 3)?>" >
 						</div>
 						<div class="col-sm-4">
 							<label>Hora presentación</label>
-							<input type="time" name="hora" class="form-control" value="<?=$pg_result($tesista,$j, 4)?>">
+							<input type="time" name="hora" class="form-control" value="<?=$pg_result($propuestas,0, 4)?>">
 						</div>
 
 						<div class="col-sm-4">
 							<label>Fecha aprobación</label>
-							<input type="date" name="fechaApro" class="form-control" value="<?=$pg_result($tesista,$j, 5)?>">
+							<input type="date" name="fechaApro" class="form-control" value="<?=$pg_result($propuestas,0, 5)?>">
 						</div>
 
 					</div>
@@ -108,10 +109,10 @@
 						</div>
 						
 						<div class="col-sm-6">
-							<a class="btn btn-success" href="mostrar_j?id=<?=$pg_result($propuesta,0, 0)?>" >Ver Jurados</a>
+							<a class="btn btn-success" href="mostrar_j?id=<?=$pg_result($propuestas,0, 0)?>" >Ver Jurados</a>
 						</div>
 					</div>
-					
+				</div>	
 			</div>
 		</form>
 			
