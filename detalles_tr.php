@@ -26,6 +26,10 @@
 
 	$tesista = pg_Exec($db,$sql);
 	$filas = pg_numRows($tesista);
+
+	if(pg_result($propuesta, ))
+	$sql = "SELECT 
+				";
 	
     if (isset($_POST["at"])){
 		$id = $_POST['id'];
@@ -104,14 +108,18 @@
                 
 <br>
 					<div class="row">
-						<div class="col-sm-6">
+						<div class="col-sm-4">
 							<div class="form-group">					
 								<input type="submit" class="btn btn-primary" name="at" id="at" value="Actualizar trabajo">
 							</div>
 						</div>
 						
-						<div class="col-sm-6">
+						<div class="col-sm-4">
 							<a class="btn btn-success" href="mostrar_j?id=<?=pg_result($propuesta,0, 0)?>" >Ver Jurados</a>
+						</div>
+
+						<div class="col-sm-4">
+							<a class="btn btn-success" href="juradoTEG_pdf?id=<?=pg_result($propuesta,0, 0)?>" >Anexos</a>
 						</div>
 					</div>
 				</div>	

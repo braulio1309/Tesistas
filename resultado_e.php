@@ -32,17 +32,18 @@
 			
 			<tbody>
 				<?php 
+				$filas = pg_numRows($entradas);
 					if(!empty($entradas)):
-						while($entrada = mysqli_fetch_assoc($entradas)):
-						?>
+						for ($j=0; $j < $filas; $j++):
+							?>
 							<tr>
-							<td> <?= $entrada['id_especialidad'] ?> </td>	
-							<td> <?= $entrada['nombreEspecialidad']?> </td>
-                            <td><a href="eliminar_e.php?id=<?=$entrada['id_especialidad'] ?>"><input class="btn btn-danger"type="button" value="Borrar"></a></td>
-                            <td><a href="Actualizar_e.php?id=<?=$entrada['id_especialidad'] ?>"><input class="btn btn-success" type="button" value="Actualizar"></a></td>					
+							<td> <?= pg_result($entradas, $j, 0) ?> </td>	
+							<td> <?= pg_result($entradas, $j, 1)?> </td>
+                            <td><a href="eliminar_e.php?id=<?=pg_result($entradas, $j, 0) ?>"><input class="btn btn-danger"type="button" value="Borrar"></a></td>
+                            <td><a href="Actualizar_e.php?id=<?=pg_result($entradas, $j, 0) ?>"><input class="btn btn-success" type="button" value="Actualizar"></a></td>					
 							</tr>
 				<?php
-						endwhile;
+						endfor;
 					endif;
 					
 					?>

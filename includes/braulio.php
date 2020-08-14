@@ -93,7 +93,7 @@
 
     //CONSULTA PARA OBTENER TODAS LAS PROPUESTA DE TIPO INSTRUMENTAL
     function PropuestaInstrumental($db){
-        $sql = "SELECT * FROM propuestas WHERE tipo_propuesta = 'Ins'";
+        $sql = "SELECT * FROM propuestas WHERE tipo_propuesta = 'Instrumental'";
         $propuestas = pg_Exec($db, $sql);
         
         if($propuestas && pg_NumRows($propuestas) >= 1){
@@ -105,7 +105,7 @@
 
     //CONSULTA PARA OBTENER TODAS LAS PROPUESTA DE TIPO EXPERIMENTAL
     function PropuestaExperimental($db){
-        $sql = "SELECT * FROM propuestas WHERE tipo_propuesta = 'Exp'";
+        $sql = "SELECT * FROM propuestas WHERE tipo_propuesta = 'Experimental'";
         $propuestas = pg_Exec($db, $sql);
         
         if($propuestas && pg_NumRows($propuestas) >= 1){

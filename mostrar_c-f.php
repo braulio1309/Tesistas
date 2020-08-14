@@ -5,10 +5,11 @@ require_once 'includes/conexion.php';
     $sql = "SELECT * FROM formatos WHERE id_formato = '$id'";
     $criterios = pg_Exec($db, $sql);
 
-   
+   //var_dump(pg_result($criterios,0,2));die();
     if(pg_result($criterios,0,2) == 'tutor_tig'){
         $sql="SELECT * FROM criterios_tutor_tig WHERE id_formato = '$id'";
         $formato = pg_Exec($db,$sql);
+
         
     }else
         if(pg_result($criterios,0,2) == 'tutor_teg'){
@@ -45,7 +46,7 @@ require_once 'includes/conexion.php';
 
                             $formato = pg_Exec($db,$sql);
                         }
-           
+           $filas = pg_numRows($formato);
 ?>
 
 <?php require_once 'includes/cabecera.php'; ?>
@@ -78,7 +79,7 @@ require_once 'includes/conexion.php';
 			
 			<tbody>
 				<?php 
-					if(!empty($entradas)):
+					
                         for ($j=0; $j < $filas; $j++):
                             ?>
 							<tr>
@@ -88,7 +89,6 @@ require_once 'includes/conexion.php';
 							</tr>
 				<?php
 						endfor;
-					endif;
 					
 					?>
 			</tbody>

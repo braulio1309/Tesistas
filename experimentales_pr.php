@@ -60,24 +60,26 @@
 			<tbody>
 				<?php 
 					$entradas = PropuestaExperimental($db);
-					if(!empty($entradas)):
-						while($entrada = mysqli_fetch_assoc($entradas)):
-						?>
-							<tr>
-							<td> <?= $entrada['num_correlativo'] ?> </td>	
-							<td> <?= $entrada['titulo']?> </td>
-							<td> <?= $entrada['f_entrega_esc']?> </td>
-							<td> <?= $entrada['f_presentacion_comite']?> </td>	
-                            <td> <?= $entrada['aprobacionComite']?> </td>
-                            <td> <?= $entrada['f_aprobacion_comite']?> </td>
-							<td> <?= $entrada['tipo_propuesta']?> </td>
+					$filas = pg_NumRows($entradas);
 
-                            <td><a href="eliminar_pr.php?id=<?=$entrada['num_correlativo'] ?>"><input class="btn btn-danger"type="button" value="Borrar"></a></td>
-                            <td><a href="detalles_pr.php?id=<?=$entrada['num_correlativo'] ?>"><input class="btn btn-success" type="button" value="Detalles"></a></td>					
+					if(!empty($entradas)):
+						for ($j=0; $j < $filas; $j++):
+							?>
+							<tr>
+							<td> <?= pg_result($entradas, $j, 0)  ?> </td>	
+							<td> <?= pg_result($entradas, $j, 6) ?> </td>
+							<td> <?= pg_result($entradas, $j, 2) ?> </td>
+							<td> <?= pg_result($entradas, $j, 3) ?> </td>	
+                            <td> <?= pg_result($entradas, $j, 4) ?> </td>
+                            <td> <?= pg_result($entradas, $j, 5) ?> </td>
+							<td> <?= pg_result($entradas, $j, 8) ?> </td>
+
+                            <td><a href="eliminar_pr.php?id=<?=pg_result($entradas, $j, 0)  ?>"><input class="btn btn-danger"type="button" value="Borrar"></a></td>
+                            <td><a href="detalles_pr.php?id=<?=pg_result($entradas, $j, 0)  ?>"><input class="btn btn-success" type="button" value="Detalles"></a></td>					
 
 							</tr>
 				<?php
-						endwhile;
+						endfor;
 					endif;
 					
 					?>
