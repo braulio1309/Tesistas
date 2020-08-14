@@ -21,13 +21,15 @@
 		<h1>Trabajos</h1>
 		<form action="busqueda_tr.php" method="POST">
 			<div class="row">
-				<div class="col-sm-8">
+				<div class="col-sm-6">
 					<input type="text" name="parametro" placeholder="Busque algun trabajo" class="form-control">
 				</div>
 				<div class="col-sm-2">
 					<input type="submit" class="btn btn-primary" value="Buscar">
 				</div>
-				
+				<div class="col-sm-2">
+					<a href="excel_tr.php" class="btn btn-success">Descargar</a>
+				</div>
 			</div>
 		</form>
 		<table class="table">
