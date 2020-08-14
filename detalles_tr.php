@@ -13,7 +13,7 @@
             WHERE 
                 t.nroCorrelativo = p.num_correlativo AND
                 t.id_tg = '$id'";
-    $propuestas = mysqli_query($db, $sql);
+    $propuestas = pg_Exec($db, $sql);
     $resultado = array();
 	$resultado = $propuestas;
 	$resultado = mysqli_fetch_assoc($resultado);
@@ -25,7 +25,7 @@
 			WHERE 
 				p.nroCorrelativo = '$num_correlativo' AND
 				p.cedulaTesista = t.cedula";
-	$tesista = mysqli_query($db,$sql);
+	$tesista = pg_Exec($db,$sql);
 	$tesistas = array();
 	$tesistas = $tesista;
     if (isset($_POST["at"])){
@@ -43,7 +43,7 @@
 			WHERE id_tg='$id'";
 		//var_dump($sql);die(); //Error
 
-		$final=mysqli_query($db,$sql);
+		$final=pg_Exec($db,$sql);
 
 		if($final==false){
 			var_dump('Error en la consulta');

@@ -5,7 +5,7 @@
 		$nombre=$_POST["especialidad"];
 		
 		$sql="INSERT INTO especialidades(id_especialidad, nombreEspecialidad) VALUES (null,'$nombre')";
-		$especialidad=mysqli_query($db,$sql);
+		$especialidad=pg_Exec($db,$sql);
 
 		if($especialidad==false){
 			var_dump('Error en la consulta');

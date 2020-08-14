@@ -11,14 +11,14 @@
                     formatos(nombre, tipo_formato) 
             VALUES 
                 ('$nombre', '$tipo')";
-        $formato = mysqli_query($db,$sql);
+        $formato = pg_Exec($db,$sql);
         $sql = "SELECT 
                     id_formato 
                 FROM 
                     formatos 
                 ORDER BY 
                     id_formato DESC";
-        $formato = mysqli_query($db,$sql);
+        $formato = pg_Exec($db,$sql);
 
         $resultado = array();
         $resultado = $formato;
@@ -30,7 +30,7 @@
                 formato_tutor_tig(id_formato) 
             VALUES 
                 ('$id')";
-            $formato = mysqli_query($db,$sql);
+            $formato = pg_Exec($db,$sql);
             
 
         }else
@@ -40,7 +40,7 @@
                     formato_tutor_teg(id_formato) 
                 VALUES 
                     ('$id')";
-                $formato = mysqli_query($db,$sql);
+                $formato = pg_Exec($db,$sql);
 
             }else
                 if($tipo == 'revisor_tig'){
@@ -49,7 +49,7 @@
                         formato_revisor_tig(id_formato) 
                     VALUES 
                         ('$id')";
-                    $formato = mysqli_query($db,$sql);
+                    $formato = pg_Exec($db,$sql);
 
                 }else
                     if($tipo == 'revisor_teg'){
@@ -58,7 +58,7 @@
                             formato_revisor_teg(id_formato) 
                         VALUES 
                             ('$id')";
-                        $formato = mysqli_query($db,$sql);
+                        $formato = pg_Exec($db,$sql);
 
                     }else
                         if($tipo == 'jurado_tig'){
@@ -67,7 +67,7 @@
                                 formato_jurado_tig(id_formato) 
                             VALUES 
                                 ('$id')";
-                            $formato = mysqli_query($db,$sql);
+                            $formato = pg_Exec($db,$sql);
 
                         }else
                             if($tipo == 'jurado_teg'){
@@ -76,7 +76,7 @@
                                     formato_jurado_teg(id_formato) 
                                 VALUES 
                                     ('$id')";
-                                $formato = mysqli_query($db,$sql);
+                                $formato = pg_Exec($db,$sql);
                             }
         header("Location:Mostrar_t.php");
 

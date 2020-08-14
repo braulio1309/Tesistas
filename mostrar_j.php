@@ -11,7 +11,7 @@
                 jurado_profe3 = p.cedula_profe OR 
                 jurado_profe4 = p.cedula_profe) AND
                 id_tg = $id";
-    $profe = mysqli_query($db, $sql);
+    $profe = pg_Exec($db, $sql);
     $resultado = array();
     $resultado = $profe;
     

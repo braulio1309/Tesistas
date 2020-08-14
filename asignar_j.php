@@ -19,7 +19,7 @@ require_once 'includes/conexion.php';
                                         HAVING 
                                             COUNT(pr.cedula_profe) < 5)";
                                                
-    $profe = mysqli_query($db, $sql);
+    $profe = pg_Exec($db, $sql);
     $resultado = array();
     $resultado = $profe;
 
@@ -31,7 +31,7 @@ require_once 'includes/conexion.php';
 	<div class="container">
 		<h1>Asignar Jurados </h1>
         <?php
-            if(mysqli_num_rows($resultado) >= 1):
+            if(pg_NumRows($resultado) >= 1):
         ?>
 		<form action="asignar_j_back.php" method="POST" >
 			<div class="card-header">

@@ -3,10 +3,10 @@
 // CONSULTA PARA MOSTRAR TODOS LOS TESISTAS
 function mostrarTesistas($conexion){
 	$sql="SELECT * FROM tesistas";
-	$clientes = mysqli_query($conexion, $sql);
+	$clientes = pg_Exec($conexion, $sql);
 	
 	$resultado = array();
-	if($clientes && mysqli_num_rows($clientes) >= 1){
+	if($clientes && pg_NumRows($clientes) >= 1){
 		$resultado = $clientes;
 	}
 	
@@ -16,10 +16,10 @@ function mostrarTesistas($conexion){
 // CONSULTA PARA ELIMINAR UN TESISTA ESPECIFICADO POR CEDULA 
 function eliminarTesista($id){
 	$sql = "DELETE FROM tesista WHERE cedula = {$id};";
-	$eliminar = mysqli_query($conexion, $sql);
+	$eliminar = pg_Exec($conexion, $sql);
 	
 	$resultado = array();
-	if($eliminar && mysqli_num_rows($eliminar) >= 1){
+	if($eliminar && pg_NumRows($eliminar) >= 1){
 		$resultado = $eliminar;
 	}
 	

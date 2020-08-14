@@ -3,49 +3,49 @@ require_once 'includes/conexion.php';
 
     $id = $_GET['id'];
     $sql = "SELECT * FROM formatos WHERE id_formato = '$id'";
-    $criterios = mysqli_query($db, $sql);
+    $criterios = pg_Exec($db, $sql);
 
     $resultado = array();
     $resultado = $criterios;
     $resultado = mysqli_fetch_assoc($resultado);
     if($resultado['tipo_formato'] == 'tutor_tig'){
         $sql="SELECT * FROM criterios_tutor_tig WHERE id_formato = '$id'";
-        $formato = mysqli_query($db,$sql);
+        $formato = pg_Exec($db,$sql);
         
     }else
         if($resultado['tipo_formato'] == 'tutor_teg'){
 
             $sql="SELECT * FROM criterios_tutor_teg WHERE id_formato = '$id'";
 
-            $formato = mysqli_query($db,$sql);
+            $formato = pg_Exec($db,$sql);
 
         }else
             if($resultado['tipo_formato'] == 'revisor_tig'){
 
                 $sql="SELECT * FROM criterios_revisor_tig WHERE id_formato = '$id'";
 
-                $formato = mysqli_query($db,$sql);
+                $formato = pg_Exec($db,$sql);
 
             }else
                 if($resultado['tipo_formato'] == 'revisor_teg'){
 
                     $sql="SELECT * FROM criterios_revisor_teg WHERE id_formato = '$id'";
 
-                    $formato = mysqli_query($db,$sql);
+                    $formato = pg_Exec($db,$sql);
 
                 }else
                     if($resultado['tipo_formato'] == 'jurado_tig'){
 
                         $sql="SELECT * FROM criterios_jurado_tig WHERE id_formato = '$id'";
 
-                        $formato = mysqli_query($db,$sql);
+                        $formato = pg_Exec($db,$sql);
 
                     }else
                         if($resultado['tipo_formato'] == 'jurado_teg'){
 
                             $sql="SELECT * FROM criterios_jurado_teg WHERE id_formato = '$id'";
 
-                            $formato = mysqli_query($db,$sql);
+                            $formato = pg_Exec($db,$sql);
                         }
             $entradas = array();
             $entradas = $formato;

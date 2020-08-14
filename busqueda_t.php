@@ -14,10 +14,10 @@
             correo_part LIKE '%$parametro%' OR 
             sexo LIKE '%$parametro%'";
 
-        $propuestas = mysqli_query($db, $sql);
+        $propuestas = pg_Exec($db, $sql);
                 
         $entradas = array();
-        if($propuestas && mysqli_num_rows($propuestas) >= 1){
+        if($propuestas && pg_NumRows($propuestas) >= 1){
             $entradas = $propuestas;
         }
         require_once "resultado_t.php";

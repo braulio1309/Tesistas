@@ -12,7 +12,7 @@
 		WHERE 
 			num_correlativo = '$id' AND
 	 		p.cedula_profe = pr.cedula_profe";
-	$propuestas = mysqli_query($db,$sql);
+	$propuestas = pg_Exec($db,$sql);
 
     $resultado = array();
 	$resultado = $propuestas;
@@ -25,7 +25,7 @@
 			WHERE 
 				p.nroCorrelativo = '$id' AND
 				p.cedulaTesista = t.cedula";
-	$tesista = mysqli_query($db,$sql);
+	$tesista = pg_Exec($db,$sql);
 	$tesistas = array();
 	$tesistas = $tesista;
 
@@ -47,7 +47,7 @@
 					f_entrega_esc = '$f_entrega_esc', f_presentacion_comite = '$f_presentacion_comite', aprobacionComite = '$nota', f_aprobacion_comite = '$f_aprobacion_comite', titulo = '$titulo'
 				WHERE 
 					num_correlativo = '$id'; ";
-		$update = mysqli_query($db,$sql);
+		$update = pg_Exec($db,$sql);
 		
 
 		if($resultado['tipo_propuesta'] == "Ins"){
@@ -56,7 +56,7 @@
 				nombreEmpresa = '$nombreEmpresa', tutorEmpresarial = '$nombreTutor'
 			WHERE 
 				num_correlativo = '$id';  ";
-			$instrumental = mysqli_query($db,$sql);
+			$instrumental = pg_Exec($db,$sql);
 			
 		}else{
 			$sql = "UPDATE experimentales
@@ -64,11 +64,11 @@
 				profesorAvala = '$profesorAvala'
 			WHERE 
 				numr_correlativo = '$id';";
-			$experimental = mysqli_query($db,$sql);
+			$experimental = pg_Exec($db,$sql);
 		}
 		
 		$sql = "SELECT * FROM propuestas WHERE num_correlativo = '$id' ORDER BY num_correlativo DESC";
-		$propuesta = mysqli_query($db,$sql);
+		$propuesta = pg_Exec($db,$sql);
 		$final = array();
 		$final = $propuesta;
 
@@ -82,10 +82,10 @@
 							trabajos(nroCorrelativo) 
 						VALUES 
 							('$id')";
-			$final = mysqli_query($db,$sql);
+			$final = pg_Exec($db,$sql);
 			
 			$sql = "SELECT * FROM trabajos ORDER BY id_tg DESC";
-			$trabajo = mysqli_query($db,$sql);
+			$trabajo = pg_Exec($db,$sql);
 			$tra = array();
 			$tra = $trabajo;
 			$tra = mysqli_fetch_assoc($tra);
@@ -97,7 +97,7 @@
 							instrumentales_tg(id_tg) 
 						VALUES 
 							('$id_tg')";
-				$final = mysqli_query($db,$sql);
+				$final = pg_Exec($db,$sql);
 
 			}else{
 				$sql = "INSERT 
@@ -105,7 +105,7 @@
 							experimentales_tg(id_tg) 
 						VALUES 
 							('$id_tg')";
-				$final = mysqli_query($db,$sql);
+				$final = pg_Exec($db,$sql);
 			}
 		}
 	}
