@@ -67,7 +67,7 @@
 			$experimental = mysqli_query($db,$sql);
 		}
 		
-		$sql = "SELECT * FROM propuestas WHERE num_correlativo = '$id'";
+		$sql = "SELECT * FROM propuestas WHERE num_correlativo = '$id' ORDER BY num_correlativo DESC";
 		$propuesta = mysqli_query($db,$sql);
 		$final = array();
 		$final = $propuesta;
@@ -75,6 +75,7 @@
 		$result = mysqli_fetch_assoc($final);
 		
 		//Cuando la propuesta esta aprobado se crea el trabajo
+		
 		if($result['aprobacionComite'] == 'APROBADO'){
 			$sql = "INSERT 
 						INTO 
@@ -167,9 +168,9 @@
 							<div class="col-sm-12">
 								<label>Calificación de comité</label>
 								<select name="nota" class="form-control">
-									<option value="APROBADO">PENDIENTE</option>
+									<option value="PENDIENTE">PENDIENTE</option>
 									<option value="APROBADO">APROBADO</option>
-									<option value="APROBADO">REPROBADO</option>
+									<option value="REPROBADO">REPROBADO</option>
 								</select>
 							</div>
 					<?php
@@ -224,6 +225,7 @@
 					<div class="form-group">
 					
 					<input type="submit" class="btn btn-primary" name="at" id="rt" value="Registrar Propuesta">
+					<a href="eliminar_pr.php?id=<?=$entrada['num_correlativo'] ?>"><input class="btn btn-danger"type="button" value="Borrar">
 				</div>
 			</div>
 		</form>

@@ -33,13 +33,15 @@
 		$consejo = isset($_POST["consejo"])?$_POST['consejo']:null;
 		$fecha   = !empty($_POST['fecha'])?$_POST['fecha']:null;
 		$hora 	 = !empty($_POST['hora'])?$_POST['hora']:null;
+		$fechaApro 	 = !empty($_POST['fechaApro'])?$_POST['fechaApro']:null;
+
 
 		$sql="UPDATE 
 				trabajos 
 			 SET 
-			 	nroConsejo = $consejo, Fecha_presentacion ='$fecha', horaPresentacion = '$hora'
+			 	nroConsejo = $consejo, Fecha_presentacion ='$fecha', horaPresentacion = '$hora', fechaAprobacion = '$fechaApro'
 			WHERE id_tg='$id'";
-		var_dump($sql);die(); //Error
+		//var_dump($sql);die(); //Error
 
 		$final=mysqli_query($db,$sql);
 
@@ -85,15 +87,20 @@
 
 
 					<div class="row">
-						<div class="col-sm-6">
+						<div class="col-sm-4">
 							<label>Fecha de presentación</label>
-							<input type="date" name="fecha" class="form-control" value="<?=$resultado['f_entrega_esc']?>" >
+							<input type="date" name="fecha" class="form-control" value="<?=$resultado['Fecha_presentacion']?>" >
 						</div>
-						<div class="col-sm-6">
+						<div class="col-sm-4">
 							<label>Hora presentación</label>
-							<input type="time" name="hora" class="form-control" value="<?=$resultado['f_presentacion_comite']?>">
+							<input type="time" name="hora" class="form-control" value="<?=$resultado['horaPresentacion']?>">
 						</div>
-						
+
+						<div class="col-sm-4">
+							<label>Fecha aprobación</label>
+							<input type="date" name="fechaApro" class="form-control" value="<?=$resultado['fechaAprobacion']?>">
+						</div>
+
 					</div>
                 
 <br>

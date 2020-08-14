@@ -10,7 +10,7 @@
 		<form action="busqueda_e.php" class="" method="POST">
 			<div class="row">
 		
-				<div class="col-sm-8">
+				<div class="col-sm-6">
 					<input type="text" name="parametro" placeholder="Busque alguna especialidad" class="form-control">
 				</div>
 				<div class="col-sm-2">
@@ -18,6 +18,9 @@
 				</div>
 				<div class="col-sm-2">
 					<a href="registro_e.php" class="btn btn-success">Nuevo</a>
+				</div>
+				<div class="col-sm-2">
+					<a href="excel_e.php" class="btn btn-success">Descargar</a>
 				</div>
 			</div>
 		</form>

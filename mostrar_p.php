@@ -12,7 +12,7 @@
 		<form action="busqueda_e.php" class="" method="POST">
 			<div class="row">
 		
-				<div class="col-sm-8">
+				<div class="col-sm-6">
 					<input type="text" name="parametro" placeholder="Busque alguna especialidad" class="form-control">
 				</div>
 				<div class="col-sm-2">
@@ -20,6 +20,10 @@
 				</div>
 				<div class="col-sm-2">
 					<a href="registro_p.php" class="btn btn-success">Nuevo</a>
+				</div>
+
+				<div class="col-sm-2">
+					<a href="excel_p.php" class="btn btn-success">Descargar</a>
 				</div>
 			</div>
 		</form>
@@ -42,15 +46,15 @@
 						while($entrada = mysqli_fetch_assoc($entradas)):
 						?>
 							<tr>
-							<td> <?= $entrada['cedula_profe'] ?> </td>	
-							<td> <?= $entrada['nombreProfe']?> </td>
-                            <td> <?= $entrada['direccionProfe']?> </td>
-                            <td> <?= $entrada['telefonoProfe']?> </td>
-                            <td> <?= $entrada['correoProfe']?> </td>
+								<td> <?= $entrada['cedula_profe'] ?> </td>	
+								<td> <?= $entrada['nombreProfe']?> </td>
+								<td> <?= $entrada['direccionProfe']?> </td>
+								<td> <?= $entrada['telefonoProfe']?> </td>
+								<td> <?= $entrada['correoProfe']?> </td>
 
-                            <td><a href="eliminar_p.php?id=<?=$entrada['cedula_profe'] ?>"><input class="btn btn-danger"type="button" value="Borrar"></a></td>
-                            <td><a href="Actualizar_p.php?id=<?=$entrada['cedula_profe'] ?>"><input class="btn btn-success" type="button" value="Actualizar"></a></td>					
-                            <td><a href="mostrar_p-e.php?id=<?=$entrada['cedula_profe'] ?>"><input class="btn btn-primary" type="button" value="Especialidades"></a></td>					
+								<td><a href="eliminar_p.php?id=<?=$entrada['cedula_profe'] ?>"><input class="btn btn-danger"type="button" value="Borrar"></a></td>
+								<td><a href="Actualizar_p.php?id=<?=$entrada['cedula_profe'] ?>"><input class="btn btn-success" type="button" value="Actualizar"></a></td>					
+								<td><a href="mostrar_p-e.php?id=<?=$entrada['cedula_profe'] ?>"><input class="btn btn-primary" type="button" value="Especialidades"></a></td>					
 
                             </tr>
 				<?php
