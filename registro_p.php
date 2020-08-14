@@ -14,7 +14,7 @@
             VALUES 
 				('$nombre','$id','$tlf','$correo','$dir', ' ')";
 
-        $profesor=mysqli_query($db,$sql);
+        $profesor=pg_Exec($db,$sql);
 		if($tipo == 'interno'){
 			$sql = "INSERT INTO 
                 internos(cedula_Profe) 
@@ -26,7 +26,7 @@
             VALUES 
 				('$id')";
 		}
-		$profesor=mysqli_query($db,$sql);
+		$profesor=pg_Exec($db,$sql);
 		if($profesor==false){
 			var_dump('Error en la consulta');
 		}else{

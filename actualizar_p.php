@@ -5,7 +5,7 @@
 	// SI EXISTE LA CEDULA DE PROFESOR SE OBTIENEN TODOS LOS DATOS DEL PROFESOR
     if($id){
         $sql = "SELECT * FROM profesores WHERE cedula_profe = $id ";
-        $profesor=mysqli_query($db,$sql);
+        $profesor=pg_Exec($db,$sql);
     
         $resultado = array();
         $resultado = $profesor;
@@ -28,7 +28,7 @@
                WHERE 
                 cedula_profe ='$id' ";
         
-        $profesor=mysqli_query($db,$sql);
+        $profesor=pg_Exec($db,$sql);
 		
 		if($profesor==false){
 			var_dump('Error en la consulta');

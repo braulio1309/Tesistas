@@ -60,7 +60,7 @@
 
     // CONSULTA PARA MOSTRAR TODAS LAS PROPUESTAS QUE HAN SIDO APROBADA
     function PropuestasAprobadas($db){
-        $sql = "SELECT * FROM propuestas p WHERE aprobacionComite = 'APROBADO'";
+        $sql = "SELECT * FROM propuestas  WHERE aprobacionComite = 'APROBADO'";
         $propuestas = pg_Exec($db, $sql);
         
         $resultado = array();
@@ -73,7 +73,7 @@
 
     // CONSULTA PARA MOSTRAR TODAS LAS PROPUESTAS QUE HAN SIDO REPROBADA
     function PropuestasReprobadas($db){
-        $sql = "SELECT * FROM propuestas p WHERE aprobacionComite = 'REPROBADO'";
+        $sql = "SELECT * FROM propuestas  WHERE aprobacionComite = 'REPROBADO'";
         $propuestas = pg_Exec($db, $sql);
         
         $resultado = array();

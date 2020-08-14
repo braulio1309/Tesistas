@@ -16,7 +16,7 @@
                                       pr.cedula_profe
                                     HAVING
                                         COUNT(pr.cedula_profe) < 5)";
-  $profesor = mysqli_query($db,$sql);
+  $profesor = pg_Exec($db,$sql);
   $resultado = array();
   $resultado = $profesor;
 
@@ -36,10 +36,10 @@
               tesistas 
             WHERE 
               cedula = '$cedula1'";
-    $tesista = mysqli_query($db,$sql);
+    $tesista = pg_Exec($db,$sql);
     
 
-    if(mysqli_num_rows($tesista)!=1){
+    if(pg_NumRows($tesista)!=1){
       header("Location:registro_pr.php");
       exit;
     }
@@ -50,8 +50,8 @@
               tesistas 
             WHERE 
               cedula = '$cedula2'";
-      $tesista = mysqli_query($db,$sql);
-      if(mysqli_num_rows($tesista)!=1){
+      $tesista = pg_Exec($db,$sql);
+      if(pg_NumRows($tesista)!=1){
         header("Location:registro_pr.php");
         exit;
       }
@@ -72,10 +72,10 @@
     VALUES 
     ('$titulo', '$tipo_propuesta', '$cedula_profe')";
     //var_dump($propuesta);die();
-    $propuesta = mysqli_query($db,$propuesta);
+    $propuesta = pg_Exec($db,$propuesta);
     
     $newPropuesta = "SELECT num_correlativo FROM propuestas ORDER BY num_correlativo DESC";
-    $newPropuesta = mysqli_query($db,$newPropuesta);
+    $newPropuesta = pg_Exec($db,$newPropuesta);
     
     $resultado = array();
 
@@ -92,7 +92,7 @@
         experimentales(Numr_correlativo, profesorAvala) 
       VALUES 
         ('$correlativo','$experimental')";
-      $propuesta = mysqli_query($db,$sql);
+      $propuesta = pg_Exec($db,$sql);
 
       
     }else{
@@ -101,7 +101,7 @@
         instrumentales(Nro_correlativo, nombreEmpresa, tutorEmpresarial) 
       VALUES 
         ('$correlativo','$nombreEmpresa', '$nombreTutor')";
-      $propuesta = mysqli_query($db,$sql);
+      $propuesta = pg_Exec($db,$sql);
 
     }
     //Tabla presentan
@@ -111,7 +111,7 @@
         presentan(cedulaTesista, nroCorrelativo) 
       VALUES 
         ('$cedula1','$correlativo')";
-      $tesista = mysqli_query($db,$sql);
+      $tesista = pg_Exec($db,$sql);
     }
 
     if($cedula2){
@@ -120,7 +120,7 @@
         presentan(cedulaTesista, nroCorrelativo) 
       VALUES 
         ('$cedula2','$correlativo')";
-      $tesista2 = mysqli_query($db,$sql2);
+      $tesista2 = pg_Exec($db,$sql2);
     }
     
   }

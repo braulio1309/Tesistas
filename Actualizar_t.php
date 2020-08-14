@@ -5,7 +5,7 @@
 		$cedula=isset($_GET["cedula"])?$_GET["cedula"]: '' ;
 		//SE OBTIENEN TODOS LOS DATOS DEL TESISTA A TRAVES DE LA CEDULA
 		$sql="SELECT * FROM tesistas WHERE cedula = '$cedula' ";
-		$tesista = mysqli_query($db,$sql);
+		$tesista = pg_Exec($db,$sql);
 
     	$resultado = array();
 		$resultado = $tesista;
@@ -23,7 +23,7 @@
 		// ACTUALIZA LOS DATOS DEL TESISTA
 		$sql="UPDATE tesistas SET nombre='$nombre' , correo_ucab='$correo_ucab', correo_part='$correo_part', telefono='$telefono', sexo='$sexo'
 			   WHERE cedula='$cedula'";
-		$tesista=mysqli_query($db,$sql);
+		$tesista=pg_Exec($db,$sql);
 
 		if($tesista==false){
 			var_dump('Error en la consulta');

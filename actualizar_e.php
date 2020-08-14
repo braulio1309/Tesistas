@@ -5,7 +5,7 @@
 	
 	if($id){
 		$sql="SELECT * FROM especialidades WHERE id_especialidad = '$id' ";
-		$especidalidad = mysqli_query($db,$sql);
+		$especidalidad = pg_Exec($db,$sql);
 	
 		$resultado = array();
 		$resultado = $especidalidad;
@@ -25,7 +25,7 @@
 			WHERE 
 				id_especialidad='$id'";
 				
-		$final=mysqli_query($db,$sql);
+		$final=pg_Exec($db,$sql);
 		
 		if($final==false){
 			var_dump('Error en la consulta');

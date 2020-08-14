@@ -16,7 +16,7 @@
                                             tiene ti 
                                         WHERE 
                                             ti.cedula_profe= '$id');";
-	$especidalidad = mysqli_query($db,$sql);
+	$especidalidad = pg_Exec($db,$sql);
 
     $entradas = array();
 	$entradas = $especidalidad;
@@ -29,7 +29,7 @@
                 tiene(cedula_profe, cod_especialidad) 
         VALUES 
             ('$id','$especialidad')";
-		$final=mysqli_query($db,$sql);
+		$final=pg_Exec($db,$sql);
 		
 		if($final==false){
 			var_dump('Error en la consulta');
@@ -47,7 +47,7 @@
 	<div class="container">
 		<h1>Asignar Especialidad a Prof. </h1>
         <?php
-            if(mysqli_num_rows($entradas) >= 1):
+            if(pg_NumRows($entradas) >= 1):
         ?>
 		<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" >
 			<div class="card-header">

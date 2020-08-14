@@ -4,7 +4,7 @@ require_once 'includes/conexion.php';
     $criterio = $_POST['criterio'];
 
     $sql = "SELECT * FROM formatos WHERE id_formato = '$id'";
-    $criterios = mysqli_query($db, $sql);
+    $criterios = pg_Exec($db, $sql);
 
     $resultado = array();
     $resultado = $criterios;
@@ -16,7 +16,7 @@ require_once 'includes/conexion.php';
             (id_formato, criterio) 
         VALUES
             ($id, '$criterio')";
-        $formato = mysqli_query($db,$sql);
+        $formato = pg_Exec($db,$sql);
         
     }else
         if($resultado['tipo_formato'] == 'tutor_teg'){
@@ -25,7 +25,7 @@ require_once 'includes/conexion.php';
                 (id_formato, criterio) 
             VALUES
                 ($id, '$criterio')";
-            $formato = mysqli_query($db,$sql);
+            $formato = pg_Exec($db,$sql);
 
         }else
             if($resultado['tipo_formato'] == 'revisor_tig'){
@@ -34,7 +34,7 @@ require_once 'includes/conexion.php';
                             (id_formato, criterio) 
                         VALUES
                             ($id, '$criterio')";
-                $formato = mysqli_query($db,$sql);
+                $formato = pg_Exec($db,$sql);
 
             }else
                 if($resultado['tipo_formato'] == 'revisor_teg'){
@@ -43,7 +43,7 @@ require_once 'includes/conexion.php';
                                 (id_formato, criterio) 
                             VALUES
                                 ($id, '$criterio')";
-                    $formato = mysqli_query($db,$sql);
+                    $formato = pg_Exec($db,$sql);
 
                 }else
                     if($resultado['tipo_formato'] == 'jurado_tig'){
@@ -52,7 +52,7 @@ require_once 'includes/conexion.php';
                                     (id_formato, criterio) 
                                 VALUES
                                     ($id, '$criterio')";
-                        $formato = mysqli_query($db,$sql);
+                        $formato = pg_Exec($db,$sql);
                         var_dump($sql);die();
 
                     }else
@@ -62,7 +62,7 @@ require_once 'includes/conexion.php';
                                         (id_formato, criterio) 
                                     VALUES
                                         ($id, '$criterio')";
-                            $formato = mysqli_query($db,$sql);
+                            $formato = pg_Exec($db,$sql);
                             var_dump($formato);die();
 
                         }

@@ -15,7 +15,7 @@
                 p.cedula_Profe = t.cedula_Profe AND 
                 e.id_especialidad = t.cod_especialidad AND
                 p.cedula_profe = '$id'";
-	$especialidad = mysqli_query($db,$sql);
+	$especialidad = pg_Exec($db,$sql);
     
     $sql = "SELECT 
                 nombreProfe 
@@ -23,7 +23,7 @@
                 profesores 
             WHERE 
                 cedula_profe ='$id'";
-    $profesor = mysqli_query($db,$sql);
+    $profesor = pg_Exec($db,$sql);
 
     $result = array();
     $result = $profesor;
@@ -42,7 +42,7 @@
 		$sql="UPDATE tesistas SET nombre='$nombre' , correo_ucab='$correo_ucab', correo_part='$correo_part', telefono='$telefono', sexo='$sexo'
 			   WHERE cedula='$cedula'";
 
-		$tesista=mysqli_query($db,$sql);
+		$tesista=pg_Exec($db,$sql);
 
 		if($tesista==false){
 			var_dump('Error en la consulta');
