@@ -2,10 +2,10 @@
 
     function mostrarEspecialidad($db){
         $sql = "SELECT * FROM especialidades";
-        $especialidad = mysqli_query($db, $sql);
+        $especialidad = pg_Exec($db, $sql);
         
         $resultado = array();
-        if($especialidad && mysqli_num_rows($especialidad) >= 1){
+        if($especialidad && pg_NumRows($especialidad) >= 1){
             $resultado = $especialidad;
         }
 	
@@ -14,10 +14,10 @@
 
     function mostrarPropuestas($db){
         $sql = "SELECT * FROM propuestas";
-        $propuestas = mysqli_query($db, $sql);
+        $propuestas = pg_Exec($db, $sql);
         
         $resultado = array();
-        if($propuestas && mysqli_num_rows($propuestas) >= 1){
+        if($propuestas && pg_NumRows($propuestas) >= 1){
             $resultado = $propuestas;
         }
 	
@@ -31,10 +31,10 @@
                     trabajos t, propuestas p 
                 WHERE 
                     t.nroCorrelativo = p.num_correlativo";
-        $propuestas = mysqli_query($db, $sql);
+        $propuestas = pg_Exec($db, $sql);
        
         $resultado = array();
-        if($propuestas && mysqli_num_rows($propuestas) >= 1){
+        if($propuestas && pg_NumRows($propuestas) >= 1){
             $resultado = $propuestas;
         }
 	
@@ -43,10 +43,10 @@
 
     function mostrarProfesores($db){
         $sql = "SELECT * FROM profesores";
-        $propuestas = mysqli_query($db, $sql);
+        $propuestas = pg_Exec($db, $sql);
         
         $resultado = array();
-        if($propuestas && mysqli_num_rows($propuestas) >= 1){
+        if($propuestas && pg_NumRows($propuestas) >= 1){
             $resultado = $propuestas;
         }
 	
@@ -55,10 +55,10 @@
 
     function PropuestasAprobadas($db){
         $sql = "SELECT * FROM propuestas p WHERE aprobacionComite = 'APROBADO'";
-        $propuestas = mysqli_query($db, $sql);
+        $propuestas = pg_Exec($db, $sql);
         
         $resultado = array();
-        if($propuestas && mysqli_num_rows($propuestas) >= 1){
+        if($propuestas && pg_NumRows($propuestas) >= 1){
             $resultado = $propuestas;
         }
 	
@@ -67,10 +67,10 @@
 
     function PropuestasReprobadas($db){
         $sql = "SELECT * FROM propuestas p WHERE aprobacionComite = 'REPROBADO'";
-        $propuestas = mysqli_query($db, $sql);
+        $propuestas = pg_Exec($db, $sql);
         
         $resultado = array();
-        if($propuestas && mysqli_num_rows($propuestas) >= 1){
+        if($propuestas && pg_NumRows($propuestas) >= 1){
             $resultado = $propuestas;
         }
 	
@@ -79,10 +79,10 @@
 
     function PropuestasPendientes($db){
         $sql = "SELECT * FROM propuestas WHERE aprobacionComite IS NULL OR aprobacionComite = 'PENDIENTE'";
-        $propuestas = mysqli_query($db, $sql);
+        $propuestas = pg_Exec($db, $sql);
         
         $resultado = array();
-        if($propuestas && mysqli_num_rows($propuestas) >= 1){
+        if($propuestas && pg_NumRows($propuestas) >= 1){
             $resultado = $propuestas;
         }
 	
@@ -91,10 +91,10 @@
 
     function PropuestaInstrumental($db){
         $sql = "SELECT * FROM propuestas WHERE tipo_propuesta = 'Ins'";
-        $propuestas = mysqli_query($db, $sql);
+        $propuestas = pg_Exec($db, $sql);
         
         $resultado = array();
-        if($propuestas && mysqli_num_rows($propuestas) >= 1){
+        if($propuestas && pg_NumRows($propuestas) >= 1){
             $resultado = $propuestas;
         }
 	
@@ -103,10 +103,10 @@
 
     function PropuestaExperimental($db){
         $sql = "SELECT * FROM propuestas WHERE tipo_propuesta = 'Exp'";
-        $propuestas = mysqli_query($db, $sql);
+        $propuestas = pg_Exec($db, $sql);
         
         $resultado = array();
-        if($propuestas && mysqli_num_rows($propuestas) >= 1){
+        if($propuestas && pg_NumRows($propuestas) >= 1){
             $resultado = $propuestas;
         }
 	
@@ -121,10 +121,10 @@
                 WHERE 
                     p.tipo_propuesta = 'Exp' AND
                     t.nroCorrelativo = p.num_correlativo";
-        $propuestas = mysqli_query($db, $sql);
+        $propuestas = pg_Exec($db, $sql);
         
         $resultado = array();
-        if($propuestas && mysqli_num_rows($propuestas) >= 1){
+        if($propuestas && pg_NumRows($propuestas) >= 1){
             $resultado = $propuestas;
         }
 	
@@ -139,10 +139,10 @@
                 WHERE 
                     p.tipo_propuesta = 'Ins' AND
                     t.nroCorrelativo = p.num_correlativo";
-        $propuestas = mysqli_query($db, $sql);
+        $propuestas = pg_Exec($db, $sql);
         
         $resultado = array();
-        if($propuestas && mysqli_num_rows($propuestas) >= 1){
+        if($propuestas && pg_NumRows($propuestas) >= 1){
             $resultado = $propuestas;
         }
 	
@@ -151,10 +151,10 @@
 
     function formatos($db){
         $sql = "SELECT * FROM formatos";
-        $propuestas = mysqli_query($db, $sql);
+        $propuestas = pg_Exec($db, $sql);
         
         $resultado = array();
-        if($propuestas && mysqli_num_rows($propuestas) >= 1){
+        if($propuestas && pg_NumRows($propuestas) >= 1){
             $resultado = $propuestas;
         }
 	
@@ -168,10 +168,10 @@
                     formatos f, formato_tutor_tig ft
                 WHERE 
                     f.id_formato = ft.id_formato";
-        $propuestas = mysqli_query($db, $sql);
+        $propuestas = pg_Exec($db, $sql);
         
         $resultado = array();
-        if($propuestas && mysqli_num_rows($propuestas) >= 1){
+        if($propuestas && pg_NumRows($propuestas) >= 1){
             $resultado = $propuestas;
         }
 	
@@ -185,10 +185,10 @@
                     formatos f, formato_tutor_teg ft
                 WHERE 
                     f.id_formato = ft.id_formato";
-        $propuestas = mysqli_query($db, $sql);
+        $propuestas = pg_Exec($db, $sql);
         
         $resultado = array();
-        if($propuestas && mysqli_num_rows($propuestas) >= 1){
+        if($propuestas && pg_NumRows($propuestas) >= 1){
             $resultado = $propuestas;
         }
 	
@@ -202,10 +202,10 @@
                     formatos f, formato_revisor_tig ft
                 WHERE 
                     f.id_formato = ft.id_formato";
-        $propuestas = mysqli_query($db, $sql);
+        $propuestas = pg_Exec($db, $sql);
         
         $resultado = array();
-        if($propuestas && mysqli_num_rows($propuestas) >= 1){
+        if($propuestas && pg_NumRows($propuestas) >= 1){
             $resultado = $propuestas;
         }
 	
@@ -219,10 +219,10 @@
                     formatos f, formato_revisor_teg ft
                 WHERE 
                     f.id_formato = ft.id_formato";
-        $propuestas = mysqli_query($db, $sql);
+        $propuestas = pg_Exec($db, $sql);
         
         $resultado = array();
-        if($propuestas && mysqli_num_rows($propuestas) >= 1){
+        if($propuestas && pg_NumRows($propuestas) >= 1){
             $resultado = $propuestas;
         }
 	
@@ -237,10 +237,10 @@
                     formatos f, formato_jurado_tig ft
                 WHERE 
                     f.id_formato = ft.id_formato";
-        $propuestas = mysqli_query($db, $sql);
+        $propuestas = pg_Exec($db, $sql);
         
         $resultado = array();
-        if($propuestas && mysqli_num_rows($propuestas) >= 1){
+        if($propuestas && pg_NumRows($propuestas) >= 1){
             $resultado = $propuestas;
         }
 	
@@ -254,10 +254,10 @@
                     formatos f, formato_jurado_tig ft
                 WHERE 
                     f.id_formato = ft.id_formato";
-        $propuestas = mysqli_query($db, $sql);
+        $propuestas = pg_Exec($db, $sql);
         
         $resultado = array();
-        if($propuestas && mysqli_num_rows($propuestas) >= 1){
+        if($propuestas && pg_NumRows($propuestas) >= 1){
             $resultado = $propuestas;
         }
 	

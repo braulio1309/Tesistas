@@ -4,12 +4,13 @@ if (isset($_POST["is"])){
 	$password=$_POST["password"];
 
 	$sql = "SELECT * FROM Usuarios_Pass WHERE usuario='$login' and pass='$password'";
-	$result = mysqli_query($db,$sql);
-	$row = mysqli_fetch_array($result,MYSQLI_ASSOC);
-		
-	$count = mysqli_num_rows($result);
+	
+
+	$result = pg_Exec($db,$sql);
+	$filas = pg_NumRows($result);
+
   
-		if($count == 1) {
+		if($filas == 1) {
 			session_start();
 			$_SESSION["usuario"]=$_POST["login"];
 		   header("location:Mostrar_t.php");
