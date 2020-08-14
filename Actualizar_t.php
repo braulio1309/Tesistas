@@ -45,7 +45,7 @@
 				
 					<div class="form-group">
 						<label for="" src="cedula">Cedula</label>
-						<input type="text" autofocus name="cedula" class="form-control" id="cedula" value="<?=$cedula ?>" readonly>
+						<input type="text"  autofocus name="cedula" class="form-control" id="cedula" value="<?=$cedula ?>" readonly>
 					</div>
 					<div class="form-group">
 						<label for="" src="nombre">Nombre</label>
@@ -70,7 +70,6 @@
 						<input class="radio-inline" type="radio" name="sexo" id="" value="F">F 
 					</div>
 					<input type="submit" class="btn btn-primary" name="at" id="rt" value="Actualizar Datos">
-					<a href="eliminar_t.php?cedula=<?=$entrada['cedula'] ?>"><input class="btn btn-danger"type="button" value="Borrar"></a>
 				</div>
 			</div>
 		</form>
