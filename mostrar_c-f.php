@@ -5,50 +5,47 @@ require_once 'includes/conexion.php';
     $sql = "SELECT * FROM formatos WHERE id_formato = '$id'";
     $criterios = pg_Exec($db, $sql);
 
-    $resultado = array();
-    $resultado = $criterios;
-    $resultado = mysqli_fetch_assoc($resultado);
-    if($resultado['tipo_formato'] == 'tutor_tig'){
+   
+    if(pg_result($criterios,0,2) == 'tutor_tig'){
         $sql="SELECT * FROM criterios_tutor_tig WHERE id_formato = '$id'";
         $formato = pg_Exec($db,$sql);
         
     }else
-        if($resultado['tipo_formato'] == 'tutor_teg'){
+        if(pg_result($criterios,0,2) == 'tutor_teg'){
 
             $sql="SELECT * FROM criterios_tutor_teg WHERE id_formato = '$id'";
 
             $formato = pg_Exec($db,$sql);
 
         }else
-            if($resultado['tipo_formato'] == 'revisor_tig'){
+            if(pg_result($criterios,0,2) == 'revisor_tig'){
 
                 $sql="SELECT * FROM criterios_revisor_tig WHERE id_formato = '$id'";
 
                 $formato = pg_Exec($db,$sql);
 
             }else
-                if($resultado['tipo_formato'] == 'revisor_teg'){
+                if(pg_result($criterios,0,2) == 'revisor_teg'){
 
                     $sql="SELECT * FROM criterios_revisor_teg WHERE id_formato = '$id'";
 
                     $formato = pg_Exec($db,$sql);
 
                 }else
-                    if($resultado['tipo_formato'] == 'jurado_tig'){
+                    if(pg_result($criterios,0,2) == 'jurado_tig'){
 
                         $sql="SELECT * FROM criterios_jurado_tig WHERE id_formato = '$id'";
 
                         $formato = pg_Exec($db,$sql);
 
                     }else
-                        if($resultado['tipo_formato'] == 'jurado_teg'){
+                        if(pg_result($criterios,0,2) == 'jurado_teg'){
 
                             $sql="SELECT * FROM criterios_jurado_teg WHERE id_formato = '$id'";
 
                             $formato = pg_Exec($db,$sql);
                         }
-            $entradas = array();
-            $entradas = $formato;
+           
 ?>
 
 <?php require_once 'includes/cabecera.php'; ?>
@@ -82,16 +79,15 @@ require_once 'includes/conexion.php';
 			<tbody>
 				<?php 
 					if(!empty($entradas)):
-						while($entrada = mysqli_fetch_assoc($entradas)):
-						?>
+                        for ($j=0; $j < $filas; $j++):
+                            ?>
 							<tr>
 								
-							<td> <?= $entrada['criterio']?> </td>
-                            <td><a href="eliminar_f.php?id=<?=$entrada['id_especialidad'] ?>"><input class="btn btn-danger"type="button" value="Borrar"></a></td>
-                            <td><a href="Actualizar_f.php?id=<?=$entrada['id_formato'] ?>"><input class="btn btn-success" type="button" value="Actualizar"></a></td>					
+							<td> <?= pg_result($formato,$j, 1)?> </td>
+                            
 							</tr>
 				<?php
-						endwhile;
+						endfor;
 					endif;
 					
 					?>

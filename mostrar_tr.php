@@ -48,25 +48,26 @@
 			<tbody>
 				<?php 
                     $entradas = mostrartrabajos($db);
-                   
-					if(!empty($entradas)):
-						while($entrada = mysqli_fetch_assoc($entradas)):
-						?>
-							<tr>
-							<td> <?= $entrada['id_tg'] ?> </td>	
-							<td> <?= $entrada['titulo']?> </td>
-							<td> <?= $entrada['nroConsejo']?> </td>
-							<td> <?= $entrada['Fecha_presentacion']?> </td>	
-                            <td> <?= $entrada['horaPresentacion']?> </td>
-                            <td> <?= $entrada['fechaAprobacion']?> </td>
-							<td> <?= $entrada['tipo_formato']?> </td>
+					$filas = pg_NumRows($entradas);
 
-                            <td><a href="eliminar_tr.php?id=<?=$entrada['id_tg'] ?>"><input class="btn btn-danger"type="button" value="Borrar"></a></td>
-                            <td><a href="detalles_tr.php?id=<?=$entrada['id_tg'] ?>& num_correlativo=<?=$entrada['nroCorrelativo']?>"><input class="btn btn-success" type="button" value="Detalles"></a></td>					
+					if(!empty($entradas)):
+						for ($j=0; $j < $filas; $j++):
+							?>
+							<tr>
+							<td> <?= pg_result($entradas, $j, 0)				?> </td>	
+							<td> <?= pg_result($entradas, $j, 1)		?> </td>
+							<td> <?= pg_result($entradas, $j, 2)		?> </td>
+							<td> <?= pg_result($entradas, $j, 3)	?> </td>	
+                            <td> <?= pg_result($entradas, $j, 4)	?> </td>
+                            <td> <?= pg_result($entradas, $j, 5)?> </td>
+							<td> <?= pg_result($entradas, $j, 6)		?> </td>
+
+                            <td><a href="eliminar_tr.php?id=<?=pg_result($entradas, $j, 0) ?>"><input class="btn btn-danger"type="button" value="Borrar"></a></td>
+                            <td><a href="detalles_tr.php?id=<?=pg_result($entradas, $j, 0) ?>& num_correlativo=<?=pg_result($entradas, $j, 1)?>"><input class="btn btn-success" type="button" value="Detalles"></a></td>					
 
 							</tr>
 				<?php
-						endwhile;
+						endfor;
 					endif;
 					
 					?>

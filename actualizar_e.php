@@ -5,11 +5,8 @@
 	
 	if($id){
 		$sql="SELECT * FROM especialidades WHERE id_especialidad = '$id' ";
-		$especidalidad = pg_Exec($db,$sql);
-	
-		$resultado = array();
-		$resultado = $especidalidad;
-		$resultado = mysqli_fetch_assoc($resultado);
+		$especialidad = pg_Exec($db,$sql);
+		
 	}
     
 	// SI PRESIONAN ACTUALIZAR DATOS LOS DATOS INTRODUCIDOS SE GUARDAN EN UNA VARIABLE.
@@ -24,7 +21,6 @@
 				nombreEspecialidad ='$nombre' 
 			WHERE 
 				id_especialidad='$id'";
-				
 		$final=pg_Exec($db,$sql);
 		
 		if($final==false){
@@ -47,9 +43,9 @@
 				<div class="container">
 					<div class="form-group">
 						<label for="" src="cedula">Nombre de la especialidad</label>
-						<input type="text" autofocus name="nombre" class="form-control" id="cedula" value="<?=$resultado['nombreEspecialidad'] ?>">
+						<input type="text" autofocus name="nombre" class="form-control" id="cedula" value="<?=pg_result($especialidad, 0, 1) ?>">
 					</div>
-					<input type="hidden" class="btn btn-primary" name="id" id="rt" value="<?=$resultado['id_especialidad']?>">
+					<input type="hidden" class="btn btn-primary" name="id" id="rt" value="<?=pg_result($especialidad, 0, 0)?>">
 
 					<input type="submit" class="btn btn-primary" name="at" id="rt" value="Actualizar Datos">
 				</div>

@@ -7,9 +7,7 @@
 		$sql="SELECT * FROM tesistas WHERE cedula = '$cedula' ";
 		$tesista = pg_Exec($db,$sql);
 
-    	$resultado = array();
-		$resultado = $tesista;
-		$resultado = mysqli_fetch_assoc($resultado);
+    	
 
 	
 	// SI SE PRESIONA ACTUALIZAR DATOS CADA VALOR SE GUARDA EN UNA VARIABLE
@@ -46,23 +44,23 @@
 				
 					<div class="form-group">
 						<label for="" src="cedula">Cedula</label>
-						<input type="text"  autofocus name="cedula" class="form-control" id="cedula" value="<?=$cedula ?>" readonly>
+						<input type="text"  autofocus name="cedula" class="form-control" id="cedula" value="<?=pg_result($tesista, 0, 0) ?>" readonly>
 					</div>
 					<div class="form-group">
 						<label for="" src="nombre">Nombre</label>
-						<input type="text" name="nombre" class="form-control" id="nombre" value="<?= $resultado['nombre'] ?>">
+						<input type="text" name="nombre" class="form-control" id="nombre" value="<?= pg_result($tesista, 0, 1) ?>">
 					</div>
 					<div class="form-group">
 						<label for="" src="correo_u">Correo UCAB</label>
-						<input type="email"  name="correo_ucab" class="form-control" id="correo_ucab" value="<?= $resultado['correo_ucab'] ?>">
+						<input type="email"  name="correo_ucab" class="form-control" id="correo_ucab" value="<?= pg_result($tesista, 0, 2) ?>">
 					</div>
 					<div class="form-group">
 						<label for="" src="correo_p">Correo Particular</label>
-						<input type="email"  name="correo_part" class="form-control" id="correo_part" value="<?= $resultado['correo_part'] ?>">
+						<input type="email"  name="correo_part" class="form-control" id="correo_part" value="<?= pg_result($tesista, 0, 3) ?>">
 					</div>
 					<div class="form-group">
 						<label for="" src="telefono">Telefono</label>
-						<input type="number" name="telefono" class="form-control" id="telefono" value="<?=$resultado['telefono'] ?>">
+						<input type="number" name="telefono" class="form-control" id="telefono" value="<?=pg_result($tesista, 0, 4) ?>">
 					</div>
 					<div class="form-group">
 					<label for=""> GENERO: </label>

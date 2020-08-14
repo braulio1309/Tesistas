@@ -1,23 +1,21 @@
 <?php
 include 'Classes/PHPExcel.php';
+require_once 'include/conexion.php';
+
     
-    $host = "localhost";
-    $dbUsername = "root";
-    $dbPassword = "";
-    $dbname = "sistema_automatizado";
-    //create connection
-    $conexion = new mysqli($host, $dbUsername, $dbPassword, $dbname);
+    
     
     if (mysqli_connect_error()) {
         die('Connect Error('. mysqli_connect_errno().')'. mysqli_connect_error());
     } else {    
     
        $cont=2;
-        $reporteCsv = $conexion
-        ->query("SELECT 
+        $sql = "SELECT 
                     *  
                 FROM 
-                    especialidades"); // se hace la consulta a la base de datos
+                    especialidades"; 
+        $especialidad = pg_Exec($db, $sql);
+        $filas = pg_numRows($especialidad);
         $objPHPExcel = new PHPExcel();
         header('Content-Type:text/csv; charset-latin1');
         header('Content-Disposition: attachment; filename= "especialidades.csv" ');
@@ -28,10 +26,10 @@ include 'Classes/PHPExcel.php';
         $objPHPExcel->getActiveSheet()->setCellValue('A1','ID' );
         $objPHPExcel->getActiveSheet()->setCellValue('B1','Especialidad' );
         
-        while($fila=$reporteCsv->fetch_assoc()){
+        for($j=0; $j<$filas; $j++){
 
-            $objPHPExcel->getActiveSheet()->setCellValue('A'.$cont,$fila['id_especialidad']);
-            $objPHPExcel->getActiveSheet()->setCellValue('B'.$cont,$fila['nombreEspecialidad']);
+            $objPHPExcel->getActiveSheet()->setCellValue('A'.$cont,pg_result($especialidad, $j, 0));
+            $objPHPExcel->getActiveSheet()->setCellValue('B'.$cont,pg_result($especialidad, $j, 1));
             
             $cont++;
         }

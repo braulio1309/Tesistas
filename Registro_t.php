@@ -8,6 +8,7 @@
 		$telefono=$_POST["telefono"];
 		$sexo=$_POST["sexo"];
 		$sql="INSERT INTO tesistas(cedula, nombre, correo_ucab, correo_part, telefono, sexo) VALUES ('$cedula','$nombre','$correo_ucab','$correo_part','$telefono','$sexo')";
+
 		$tesista=pg_Exec($db,$sql);
 
 		if($tesista==false){

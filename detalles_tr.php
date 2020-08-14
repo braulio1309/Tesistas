@@ -14,9 +14,6 @@
                 t.nroCorrelativo = p.num_correlativo AND
                 t.id_tg = '$id'";
     $propuestas = pg_Exec($db, $sql);
-    $resultado = array();
-	$resultado = $propuestas;
-	$resultado = mysqli_fetch_assoc($resultado);
 	
 	$sql = "SELECT 
 				t.nombre 
@@ -26,8 +23,8 @@
 				p.nroCorrelativo = '$num_correlativo' AND
 				p.cedulaTesista = t.cedula";
 	$tesista = pg_Exec($db,$sql);
-	$tesistas = array();
-	$tesistas = $tesista;
+	$filas = pg_numRows($tesista);
+
     if (isset($_POST["at"])){
 		$id = $_POST['id'];
 		$consejo = isset($_POST["consejo"])?$_POST['consejo']:null;
@@ -41,7 +38,6 @@
 			 SET 
 			 	nroConsejo = $consejo, Fecha_presentacion ='$fecha', horaPresentacion = '$hora', fechaAprobacion = '$fechaApro'
 			WHERE id_tg='$id'";
-		//var_dump($sql);die(); //Error
 
 		$final=pg_Exec($db,$sql);
 
@@ -62,26 +58,26 @@
 				<div class="container">
 				<?php 
                                 
-					while($tesi = mysqli_fetch_assoc($tesistas)):
+					for ($j=0; $j < $filas; $j++):
 				?>
 					<div class="form-group">
 						<label  src="cedula">Autor</label>
-						<input type="text"  class="form-control" value="<?=$tesi['nombre']?>" readonly>
-						<input type="hidden" name="id" class="form-control" value="<?=$resultado['id_tg']?>" readonly>
+						<input type="text"  class="form-control" value="<?=$pg_result($tesista,$j, 0)?>" readonly>
+						<input type="hidden" name="id" class="form-control" value="<?=$num_correlativo?>" readonly>
 
 					</div>
 				<?php
-					endwhile;
+					endfor;
 				?>
 					<div class="form-group">
 						<label for="" src="nombre">Título</label>
-						<input type="text" name="titulo" class="form-control" value="<?=$resultado['titulo']?>" readonly>
+						<input type="text" name="titulo" class="form-control" value="<?=$pg_result($propuesta,0, 1)?>" readonly>
 					</div>
 
                     <div class="row">
 						<div class="col-sm-12">
 							<label>Número de consejo</label>
-							<input type="number" name="consejo" class="form-control"  value="<?=$resultado['nroConsejo']?>" >
+							<input type="number" name="consejo" class="form-control"  value="<?=$pg_result($propuesta,0, 2)?>" >
 						</div>
                     </div>
 
@@ -89,16 +85,16 @@
 					<div class="row">
 						<div class="col-sm-4">
 							<label>Fecha de presentación</label>
-							<input type="date" name="fecha" class="form-control" value="<?=$resultado['Fecha_presentacion']?>" >
+							<input type="date" name="fecha" class="form-control" value="<?=$pg_result($tesista,$j, 3)?>" >
 						</div>
 						<div class="col-sm-4">
 							<label>Hora presentación</label>
-							<input type="time" name="hora" class="form-control" value="<?=$resultado['horaPresentacion']?>">
+							<input type="time" name="hora" class="form-control" value="<?=$pg_result($tesista,$j, 4)?>">
 						</div>
 
 						<div class="col-sm-4">
 							<label>Fecha aprobación</label>
-							<input type="date" name="fechaApro" class="form-control" value="<?=$resultado['fechaAprobacion']?>">
+							<input type="date" name="fechaApro" class="form-control" value="<?=$pg_result($tesista,$j, 5)?>">
 						</div>
 
 					</div>
@@ -112,7 +108,7 @@
 						</div>
 						
 						<div class="col-sm-6">
-							<a class="btn btn-success" href="mostrar_j?id=<?=$resultado['id_tg']?>" >Ver Jurados</a>
+							<a class="btn btn-success" href="mostrar_j?id=<?=$pg_result($propuesta,0, 0)?>" >Ver Jurados</a>
 						</div>
 					</div>
 					

@@ -16,10 +16,9 @@
                                             tiene ti 
                                         WHERE 
                                             ti.cedula_profe= '$id');";
-	$especidalidad = pg_Exec($db,$sql);
+	$especialidad = pg_Exec($db,$sql);
+    $filas = pg_NumRows($especialidad);
 
-    $entradas = array();
-	$entradas = $especidalidad;
 
     if (isset($_POST["at"])){
         $especialidad = $_POST["especialidad"];
@@ -47,7 +46,7 @@
 	<div class="container">
 		<h1>Asignar Especialidad a Prof. </h1>
         <?php
-            if(pg_NumRows($entradas) >= 1):
+            if(pg_NumRows($especialidad) >= 1):
         ?>
 		<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" >
 			<div class="card-header">
@@ -59,11 +58,11 @@
                                 <select class="form-control" name="especialidad">
                                 <?php 
                                 
-                                    while($entrada = mysqli_fetch_assoc($entradas)):
-                                ?>
-                                        <option value="<?=$entrada['id_especialidad']?>"><?=$entrada['nombreEspecialidad']?></option>
+                                for ($j=0; $j < $filas; $j++):
+                                    ?>
+                                        <option value="<?=pg_result($especialidad, $j, 0)?>"><?=pg_result($especialidad, $j, 1)?></option>
                                 <?php
-                                    endwhile;
+                                    endfor;
                                 ?>
                                 </select>
                             </div>

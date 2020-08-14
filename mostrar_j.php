@@ -12,8 +12,7 @@
                 jurado_profe4 = p.cedula_profe) AND
                 id_tg = $id";
     $profe = pg_Exec($db, $sql);
-    $resultado = array();
-    $resultado = $profe;
+	$filas = pg_NumRows($profe);
     
 
 ?>
@@ -41,16 +40,16 @@
 			
 			<tbody>
 				<?php 
-					if(!empty($resultado)):
-						while($entrada = mysqli_fetch_assoc($resultado)):
-						?>
+					if(!empty($profe)):
+						for ($j=0; $j < $filas; $j++):
+							?>
 							<tr>
-                                <td> <?= $entrada['cedula_profe'] ?> </td>	
-                                <td> <?= $entrada['nombreProfe']?> </td>
+                                <td> <?= pg_result($profe, $j, 0) ?> </td>	
+                                <td> <?= pg_result($profe, $j, 1)?> </td>
                             
 							</tr>
 				<?php
-						endwhile;
+						endfor;
 					endif;
 					
 					?>

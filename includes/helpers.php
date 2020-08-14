@@ -5,7 +5,6 @@ function mostrarTesistas($conexion){
 	$sql="SELECT * FROM tesistas";
 	$clientes = pg_Exec($conexion, $sql);
 	
-	$resultado = array();
 	if($clientes && pg_NumRows($clientes) >= 1){
 		$resultado = $clientes;
 	}

@@ -42,23 +42,25 @@
 			<tbody>
 				<?php 
 					$entradas = mostrarProfesores($db);
-					if(!empty($entradas)):
-						while($entrada = mysqli_fetch_assoc($entradas)):
-						?>
-							<tr>
-								<td> <?= $entrada['cedula_profe'] ?> </td>	
-								<td> <?= $entrada['nombreProfe']?> </td>
-								<td> <?= $entrada['direccionProfe']?> </td>
-								<td> <?= $entrada['telefonoProfe']?> </td>
-								<td> <?= $entrada['correoProfe']?> </td>
+					$filas = pg_NumRows($entradas);
 
-								<td><a href="eliminar_p.php?id=<?=$entrada['cedula_profe'] ?>"><input class="btn btn-danger"type="button" value="Borrar"></a></td>
-								<td><a href="Actualizar_p.php?id=<?=$entrada['cedula_profe'] ?>"><input class="btn btn-success" type="button" value="Actualizar"></a></td>					
-								<td><a href="mostrar_p-e.php?id=<?=$entrada['cedula_profe'] ?>"><input class="btn btn-primary" type="button" value="Especialidades"></a></td>					
+					if(!empty($entradas)):
+						for ($j=0; $j < $filas; $j++):
+							?>
+							<tr>
+								<td> <?= pg_result($entradas, $j, 0) ?> </td>	
+								<td> <?= pg_result($entradas, $j, 1)	?> </td>
+								<td> <?= pg_result($entradas, $j, 2)	?> </td>
+								<td> <?= pg_result($entradas, $j, 3)	?> </td>
+								<td> <?= pg_result($entradas, $j, 4)	?> </td>
+
+								<td><a href="eliminar_p.php?id=<?=pg_result($entradas, $j, 0)?>"><input class="btn btn-danger"type="button" value="Borrar"></a></td>
+								<td><a href="Actualizar_p.php?id=<?=pg_result($entradas, $j, 0) ?>"><input class="btn btn-success" type="button" value="Actualizar"></a></td>					
+								<td><a href="mostrar_p-e.php?id=<?=pg_result($entradas, $j, 0) ?>"><input class="btn btn-primary" type="button" value="Especialidades"></a></td>					
 
                             </tr>
 				<?php
-						endwhile;
+						endfor;
 					endif;
 					
 					?>

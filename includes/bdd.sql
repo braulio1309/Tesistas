@@ -46,7 +46,7 @@ CREATE TABLE Tesistas(
 	nombre Nombres,
 	correo_ucab mail unique,
 	correo_part mail unique,
-	telefono varchar(10) not null,
+	telefono varchar(20) not null,
 	sexo Sexo,
 	primary key(cedula)
 );
@@ -101,7 +101,7 @@ REFERENCES Profesores(cedula_profe);
 
 --CREAMOS TABLA DE PROPUESTAS
 CREATE TABLE Propuestas(
-	num_correlativo int unique not null,
+	num_correlativo serial unique not null,
 	cedula_profe CedulaP,
 	f_entrega_esc Fecha,
 	f_presentacion_comite Fecha,

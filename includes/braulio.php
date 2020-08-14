@@ -5,7 +5,6 @@
         $sql = "SELECT * FROM especialidades";
         $especialidad = pg_Exec($db, $sql);
         
-        $resultado = array();
         if($especialidad && pg_NumRows($especialidad) >= 1){
             $resultado = $especialidad;
         }
@@ -18,7 +17,6 @@
         $sql = "SELECT * FROM propuestas";
         $propuestas = pg_Exec($db, $sql);
         
-        $resultado = array();
         if($propuestas && pg_NumRows($propuestas) >= 1){
             $resultado = $propuestas;
         }
@@ -29,14 +27,13 @@
     // CONSULTA PARA MOSTRAR TODOS LOS TRABAJOS
     function mostrartrabajos($db){
         $sql = "SELECT 
-                    t.id_tg, p.titulo, t.nroConsejo, t.Fecha_presentacion, t.horaPresentacion, t.fechaAprobacion, t.tipo_formato, t.nroCorrelativo
+                    t.id_tg, p.titulo, t.nroConsejo, t.Fecha_presentacion, t.horaPresentacion, t.fechaAprobacion,  t.nroCorrelativo
                 FROM 
                     trabajos t, propuestas p 
                 WHERE 
                     t.nroCorrelativo = p.num_correlativo";
         $propuestas = pg_Exec($db, $sql);
        
-        $resultado = array();
         if($propuestas && pg_NumRows($propuestas) >= 1){
             $resultado = $propuestas;
         }
@@ -50,7 +47,6 @@
         $sql = "SELECT * FROM profesores";
         $propuestas = pg_Exec($db, $sql);
         
-        $resultado = array();
         if($propuestas && pg_NumRows($propuestas) >= 1){
             $resultado = $propuestas;
         }
@@ -63,7 +59,6 @@
         $sql = "SELECT * FROM propuestas  WHERE aprobacionComite = 'APROBADO'";
         $propuestas = pg_Exec($db, $sql);
         
-        $resultado = array();
         if($propuestas && pg_NumRows($propuestas) >= 1){
             $resultado = $propuestas;
         }
@@ -76,7 +71,6 @@
         $sql = "SELECT * FROM propuestas  WHERE aprobacionComite = 'REPROBADO'";
         $propuestas = pg_Exec($db, $sql);
         
-        $resultado = array();
         if($propuestas && pg_NumRows($propuestas) >= 1){
             $resultado = $propuestas;
         }
@@ -89,7 +83,6 @@
         $sql = "SELECT * FROM propuestas WHERE aprobacionComite IS NULL OR aprobacionComite = 'PENDIENTE'";
         $propuestas = pg_Exec($db, $sql);
         
-        $resultado = array();
         if($propuestas && pg_NumRows($propuestas) >= 1){
             $resultado = $propuestas;
         }
@@ -103,7 +96,6 @@
         $sql = "SELECT * FROM propuestas WHERE tipo_propuesta = 'Ins'";
         $propuestas = pg_Exec($db, $sql);
         
-        $resultado = array();
         if($propuestas && pg_NumRows($propuestas) >= 1){
             $resultado = $propuestas;
         }
@@ -116,7 +108,6 @@
         $sql = "SELECT * FROM propuestas WHERE tipo_propuesta = 'Exp'";
         $propuestas = pg_Exec($db, $sql);
         
-        $resultado = array();
         if($propuestas && pg_NumRows($propuestas) >= 1){
             $resultado = $propuestas;
         }
@@ -136,7 +127,6 @@
                     t.nroCorrelativo = p.num_correlativo";
         $propuestas = pg_Exec($db, $sql);
         
-        $resultado = array();
         if($propuestas && pg_NumRows($propuestas) >= 1){
             $resultado = $propuestas;
         }
@@ -155,7 +145,6 @@
                     t.nroCorrelativo = p.num_correlativo";
         $propuestas = pg_Exec($db, $sql);
         
-        $resultado = array();
         if($propuestas && pg_NumRows($propuestas) >= 1){
             $resultado = $propuestas;
         }
@@ -169,7 +158,6 @@
         $sql = "SELECT * FROM formatos";
         $propuestas = pg_Exec($db, $sql);
         
-        $resultado = array();
         if($propuestas && pg_NumRows($propuestas) >= 1){
             $resultado = $propuestas;
         }
@@ -187,7 +175,6 @@
                     f.id_formato = ft.id_formato";
         $propuestas = pg_Exec($db, $sql);
         
-        $resultado = array();
         if($propuestas && pg_NumRows($propuestas) >= 1){
             $resultado = $propuestas;
         }
@@ -205,7 +192,6 @@
                     f.id_formato = ft.id_formato";
         $propuestas = pg_Exec($db, $sql);
         
-        $resultado = array();
         if($propuestas && pg_NumRows($propuestas) >= 1){
             $resultado = $propuestas;
         }
@@ -223,7 +209,6 @@
                     f.id_formato = ft.id_formato";
         $propuestas = pg_Exec($db, $sql);
         
-        $resultado = array();
         if($propuestas && pg_NumRows($propuestas) >= 1){
             $resultado = $propuestas;
         }
@@ -241,7 +226,6 @@
                     f.id_formato = ft.id_formato";
         $propuestas = pg_Exec($db, $sql);
         
-        $resultado = array();
         if($propuestas && pg_NumRows($propuestas) >= 1){
             $resultado = $propuestas;
         }
@@ -259,7 +243,6 @@
                     f.id_formato = ft.id_formato";
         $propuestas = pg_Exec($db, $sql);
         
-        $resultado = array();
         if($propuestas && pg_NumRows($propuestas) >= 1){
             $resultado = $propuestas;
         }
@@ -277,7 +260,6 @@
                     f.id_formato = ft.id_formato";
         $propuestas = pg_Exec($db, $sql);
         
-        $resultado = array();
         if($propuestas && pg_NumRows($propuestas) >= 1){
             $resultado = $propuestas;
         }

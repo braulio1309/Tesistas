@@ -6,19 +6,19 @@
             internos i, profesores p
           WHERE
             i.cedula_Profe = p.cedula_profe AND
-            p.cedula_profe IN (SELECT 
+            p.cedula_profe NOT IN (SELECT 
                                       p.cedula_profe 
                                     FROM 
                                       propuestas pr, profesores p 
                                     WHERE 
                                       pr.cedula_profe = p.cedula_profe 
                                     GROUP BY 
-                                      pr.cedula_profe
+                                      pr.cedula_profe, p.cedula_profe
                                     HAVING
-                                        COUNT(pr.cedula_profe) < 5)";
+                                        COUNT(pr.cedula_profe) > 5)";
   $profesor = pg_Exec($db,$sql);
-  $resultado = array();
-  $resultado = $profesor;
+  $filas = pg_NumRows($profesor);
+
 
 	if (isset($_POST["rt"])){
     //Recibimos todos los valores
@@ -62,9 +62,9 @@
 
     //Tipo de propuesta
     if($experimental){
-      $tipo_propuesta = 'Exp';
+      $tipo_propuesta = 'Experimental';
     }else 
-      $tipo_propuesta = 'Ins';
+      $tipo_propuesta = 'Instrumental';
     //Registramos la propuesta
     $propuesta = "INSERT 
     INTO 
@@ -77,13 +77,12 @@
     $newPropuesta = "SELECT num_correlativo FROM propuestas ORDER BY num_correlativo DESC";
     $newPropuesta = pg_Exec($db,$newPropuesta);
     
-    $resultado = array();
+    
 
     
-    $resultado = $newPropuesta;
-    $resultado = mysqli_fetch_assoc($resultado);
+    
+    $correlativo = pg_result($newPropuesta, 0, 0);
 
-    $correlativo = $resultado['num_correlativo'];
     //Guardamos si es experimental o instrumental
     if($experimental){
 
@@ -162,11 +161,11 @@
                 <select class="form-control" name="cedula_profe">
                 <?php 
                 
-                    while($entrada = mysqli_fetch_assoc($resultado)):
-                ?>
-                        <option value="<?=$entrada['cedula_profe']?>"><?=$entrada['nombreProfe']?></option>
+                for ($j=0; $j < $filas; $j++):
+                  ?>
+                        <option value="<?=pg_result($profesor, $j, 0)?>"><?=pg_result($profesor, $j, 1)?></option>
                 <?php
-                    endwhile;
+                    endfor;
                 ?>
                 </select>
             </div>

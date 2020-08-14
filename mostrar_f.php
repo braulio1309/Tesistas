@@ -56,17 +56,19 @@
 			<tbody>
 				<?php 
 					$entradas = formatos($db);
+					$filas = pg_NumRows($entradas);
+
 					if(!empty($entradas)):
-						while($entrada = mysqli_fetch_assoc($entradas)):
-						?>
+						for ($j=0; $j < $filas; $j++):
+							?>
 							<tr>
-							<td> <?= $entrada['id_formato'] ?> </td>	
-							<td> <?= $entrada['nombre']?> </td>
-                            <td><a href="eliminar_f.php?id=<?=$entrada['id_especialidad'] ?>"><input class="btn btn-danger"type="button" value="Borrar"></a></td>
-                            <td><a href="mostrar_c-f.php?id=<?=$entrada['id_formato'] ?>"><input class="btn btn-success" type="button" value="Criterios"></a></td>					
+							<td> <?=  pg_result($entradas, $j, 0) ?> </td>	
+							<td> <?= pg_result($entradas, $j, 1)?> </td>
+                            <td><a href="eliminar_f.php?id=<?=pg_result($entradas, $j, 0) ?>"><input class="btn btn-danger"type="button" value="Borrar"></a></td>
+                            <td><a href="mostrar_c-f.php?id=<?=pg_result($entradas, $j, 0) ?>"><input class="btn btn-success" type="button" value="Criterios"></a></td>					
 							</tr>
 				<?php
-						endwhile;
+						endfor;
 					endif;
 					
 					?>

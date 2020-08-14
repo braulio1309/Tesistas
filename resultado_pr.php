@@ -39,7 +39,7 @@
 			<tbody>
 				<?php 
 					if(!empty($entradas)):
-						while($entrada = mysqli_fetch_assoc($entradas)):
+						for ($j=0; $j < $filas; $j++):
 						?>
 							<tr>
 							<td> <?= $entrada['num_correlativo'] ?> </td>	

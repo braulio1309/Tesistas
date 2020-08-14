@@ -23,11 +23,9 @@
                 profesores 
             WHERE 
                 cedula_profe ='$id'";
-    $profesor = pg_Exec($db,$sql);
+	$profesor = pg_Exec($db,$sql);
+	$filas = pg_NumRows($especialidad);
 
-    $result = array();
-    $result = $profesor;
-    $profesor = mysqli_fetch_assoc($result);
 
     $entradas = array();
 	$entradas = $especialidad;
@@ -58,7 +56,7 @@
 <div class="container">
     
 	<div class="container">
-		<h1>Especialidades de prof. <?=$profesor['nombreProfe']?></h1>
+		<h1>Especialidades de prof. <?=pg_result($profesor, 0, 0)?></h1>
         <div class="row">
             
             <div class="col-sm-4">
@@ -76,16 +74,16 @@
 			<tbody>
 				<?php 
 					
-					if(!empty($entradas)):
-						while($entrada = mysqli_fetch_assoc($entradas)):
-						?>
+					if(!empty($especialidad)):
+						for ($j=0; $j < $filas; $j++):
+							?>
 							<tr>
-							<td> <?= $entrada['id_especialidad'] ?> </td>	
-							<td> <?= $entrada['nombreEspecialidad']?> </td>
+							<td> <?= pg_result($especialidad, $j, 0) ?> </td>	
+							<td> <?= pg_result($especialidad, $j, 1)?> </td>
                            
 							</tr>
 				<?php
-						endwhile;
+						endfor;
 					endif;
 					
 					?>

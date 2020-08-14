@@ -3,7 +3,7 @@
 
 <?php
 	require_once 'includes/conexion.php';
-	$id = isset($_GET["id"])? $_GET["id"]: null;
+	$id = isset($_GET["id"])? $_GET["id"]: $_POST["id"];
 		
     $sql="SELECT 
 			pr.num_correlativo, pr.f_entrega_esc, pr.f_presentacion_comite, pr.aprobacionComite, pr.f_aprobacion_comite, pr.titulo, pr.tipo_propuesta, p.nombreProfe, pr.comentario
@@ -12,12 +12,9 @@
 		WHERE 
 			num_correlativo = '$id' AND
 	 		p.cedula_profe = pr.cedula_profe";
-	$propuestas = pg_Exec($db,$sql);
+	$entradas = pg_Exec($db,$sql);
 
-    $resultado = array();
-	$resultado = $propuestas;
-	$resultado = mysqli_fetch_assoc($resultado);
-
+    
 	$sql = "SELECT 
 				t.nombre 
 			FROM 
@@ -26,8 +23,8 @@
 				p.nroCorrelativo = '$id' AND
 				p.cedulaTesista = t.cedula";
 	$tesista = pg_Exec($db,$sql);
-	$tesistas = array();
-	$tesistas = $tesista;
+	$filas = pg_NumRows($tesista);
+	
 
     if (isset($_POST["at"])){
 
@@ -50,12 +47,12 @@
 		$update = pg_Exec($db,$sql);
 		
 
-		if($resultado['tipo_propuesta'] == "Ins"){
+		if(pg_result($entradas,0,6) == "Instrumental"){
 			$sql = "UPDATE instrumentales
 			SET 
 				nombreEmpresa = '$nombreEmpresa', tutorEmpresarial = '$nombreTutor'
 			WHERE 
-				num_correlativo = '$id';  ";
+				nro_correlativo = '$id';  ";
 			$instrumental = pg_Exec($db,$sql);
 			
 		}else{
@@ -67,34 +64,29 @@
 			$experimental = pg_Exec($db,$sql);
 		}
 		
-		$sql = "SELECT * FROM propuestas WHERE num_correlativo = '$id' ORDER BY num_correlativo DESC";
+		$sql = "SELECT num_correlativo, aprobacionComite FROM propuestas WHERE num_correlativo = '$id'";
 		$propuesta = pg_Exec($db,$sql);
-		$final = array();
-		$final = $propuesta;
-
-		$result = mysqli_fetch_assoc($final);
 		
 		//Cuando la propuesta esta aprobado se crea el trabajo
-		
-		if($result['aprobacionComite'] == 'APROBADO'){
+		$id =pg_result($propuesta,0,0);
+		if(pg_result($propuesta,0,1) == 'APROBADO'){
 			$sql = "INSERT 
 						INTO 
 							trabajos(nroCorrelativo) 
 						VALUES 
 							('$id')";
+			//var_dump($sql);die();
 			$final = pg_Exec($db,$sql);
 			
 			$sql = "SELECT * FROM trabajos ORDER BY id_tg DESC";
 			$trabajo = pg_Exec($db,$sql);
-			$tra = array();
-			$tra = $trabajo;
-			$tra = mysqli_fetch_assoc($tra);
+			
 
-			$id_trabajo = $tra['id_tg'];
-			if($result['tipo_propuesta'] == 'Ins'){
+			$id_tg = pg_result($trabajo, 0,0);
+			if(pg_result($entradas,0,8) == 'Instrumental'){
 				$sql = "INSERT 
 						INTO 
-							instrumentales_tg(id_tg) 
+							tig(id_tg) 
 						VALUES 
 							('$id_tg')";
 				$final = pg_Exec($db,$sql);
@@ -102,7 +94,7 @@
 			}else{
 				$sql = "INSERT 
 						INTO 
-							experimentales_tg(id_tg) 
+							teg(id_tg) 
 						VALUES 
 							('$id_tg')";
 				$final = pg_Exec($db,$sql);
@@ -120,28 +112,28 @@
 				<div class="container">
 				<?php 
                                 
-					while($tesi = mysqli_fetch_assoc($tesista)):
-                ?>
-					<div class="form-group">
-						<label  src="cedula">Autor</label>
-						<input type="text"  class="form-control" value="<?=$tesi['nombre']?>" readonly>
-						<input type="hidden" name="id" class="form-control" value="<?=$resultado['num_correlativo']?>" readonly>
+					for ($j=0; $j < $filas; $j++):
+									?>
+						<div class="form-group">
+							<label  src="cedula">Autor</label>
+							<input type="text"  class="form-control" value="<?=pg_result($tesista, $j, 0)?>" readonly>
+							<input type="hidden" name="id" class="form-control" value="<?=pg_result($entradas, 0, 0)?>" readonly>
 
-					</div>
+						</div>
 				<?php
-					endwhile;
+					endfor;
 				?>
                    
 
 					<div class="form-group">
 						<label for="" src="nombre">Título</label>
-						<input type="text" name="titulo" class="form-control" value="<?= $resultado['titulo']?>">
+						<input type="text" name="titulo" class="form-control" value="<?= pg_result($entradas, 0, 5)?>">
 					</div>
 
                     <div class="row">
 						<div class="col-sm-12">
 							<label>Tipo de tesis</label>
-							<input type="text" class="form-control"  value="<?=$resultado['tipo_propuesta']?>" readonly>
+							<input type="text" class="form-control"  value="<?=pg_result($entradas, 0, 6)?>" readonly>
 						</div>
                     </div>
 
@@ -149,17 +141,17 @@
 						<div class="col-sm-12">
 							<div class="form-group">
 								<label  src="cedula">Tutor</label>
-								<input type="text" class="form-control" value="<?=$resultado['nombreProfe']?>" readonly>
+								<input type="text" class="form-control" value="<?=pg_result($entradas, 0, 7)?>" readonly>
 							</div>
 						</div>
                     </div>
 					<?php
-						if($resultado['aprobacionComite'] == 'APROBADO' ):
+						if(pg_result($entradas, 0, 3) == 'APROBADO' ):
 					?>
 					<div class="row">
 						<div class="col-sm-12">
 							<label>Calificación de comité</label>
-							<input type="text" name ="nota" class="form-control"  value="<?=$resultado['aprobacionComite']?>" readonly>
+							<input type="text" name ="nota" class="form-control"  value="<?=pg_result($entradas, 0, 3)?>" readonly>
 						</div>
 					<?php
 						else:
@@ -168,7 +160,7 @@
 							<div class="col-sm-12">
 								<label>Calificación de comité</label>
 								<select name="nota" class="form-control">
-									<option value="PENDIENTE">PENDIENTE</option>
+									<option value="">PENDIENTE</option>
 									<option value="APROBADO">APROBADO</option>
 									<option value="REPROBADO">REPROBADO</option>
 								</select>
@@ -183,21 +175,22 @@
 					<div class="row">
 						<div class="col-sm-4">
 							<label>Fecha entrega escuela</label>
-							<input type="date" name="f_entrega_esc" class="form-control" value="<?=$resultado['f_entrega_esc']?>" >
+							<input type="date" name="f_entrega_esc" class="form-control" value="<?=pg_result($entradas, 0, 0)?>" >
 						</div>
 						<div class="col-sm-4">
 							<label>fecha presentación comité</label>
-							<input type="date" name="f_presentacion_comite" class="form-control" value="<?=$resultado['f_presentacion_comite']?>">
+							<input type="date" name="f_presentacion_comite" class="form-control" value="<?=pg_result($entradas, 0, 2)?>">
 						</div>
 						<div class="col-sm-4">
 							<label>fecha aprobación comité</label>
-							<input type="date" name="f_aprobacion_comite" class="form-control" value="<?=$resultado['f_aprobacion_comite']?>" >
+							<input type="date" name="f_aprobacion_comite" class="form-control" value="<?=pg_result($entradas, 0, 5)?>" >
 						</div>
 					</div>
 
 					<div class="row">
 						<?php
-							if($resultado['tipo_propuesta'] == 'Ins'): 
+						
+							if(pg_result($entradas, 0, 6) == 'Instrumental'): 
 						?>
 							<div class="col-sm-6">
 								<label>Nombre Empresa</label>
@@ -225,7 +218,7 @@
 					<div class="form-group">
 					
 					<input type="submit" class="btn btn-primary" name="at" id="rt" value="Registrar Propuesta">
-					<a href="eliminar_pr.php?id=<?=$entrada['num_correlativo'] ?>"><input class="btn btn-danger"type="button" value="Borrar">
+					<a href="eliminar_pr.php?id=<?=pg_result($entradas, 0, 0) ?>"><input class="btn btn-danger"type="button" value="Borrar">
 				</div>
 			</div>
 		</form>

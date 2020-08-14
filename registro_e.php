@@ -4,7 +4,7 @@
 		
 		$nombre=$_POST["especialidad"];
 		
-		$sql="INSERT INTO especialidades(id_especialidad, nombreEspecialidad) VALUES (null,'$nombre')";
+		$sql="INSERT INTO especialidades(nombreEspecialidad) VALUES ('$nombre')";
 		$especialidad=pg_Exec($db,$sql);
 
 		if($especialidad==false){

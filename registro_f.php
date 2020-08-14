@@ -20,16 +20,15 @@
                     id_formato DESC";
         $formato = pg_Exec($db,$sql);
 
-        $resultado = array();
-        $resultado = $formato;
-        $resultado = mysqli_fetch_assoc($resultado);
-        $id = $resultado['id_formato'];
+        
+        $id = pg_result($formato, 0,0);
 
         if($tipo == 'tutor_tig'){
             $sql="INSERT INTO 
                 formato_tutor_tig(id_formato) 
             VALUES 
                 ('$id')";
+            //var_dump($sql);die();
             $formato = pg_Exec($db,$sql);
             
 
