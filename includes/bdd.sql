@@ -65,7 +65,7 @@ CREATE TABLE Profesores(
 	cedula_profe CedulaP NOT NULL,
 	nombreProfe Nombres,
 	direccionProfe TextoL,
-	telefonoProfe int unique not null,
+	telefonoProfe varchar(12) unique not null,
 	correoProfe mail unique,
 	localidad TextoM,
 	primary key(cedula_profe)
