@@ -5,17 +5,36 @@
     require_once 'includes/conexion.php';
 	$id = isset($_GET["id"]) ? $_GET["id"]: null;
 	$num_correlativo = isset($_GET["num_correlativo"]) ? $_GET["num_correlativo"]: null;
+
+		$sql = "SELECT 
+					t.id_tg, p.titulo, t.nroConsejo, t.Fecha_presentacion, t.horaPresentacion, t.fechaAprobacion, t.tipo_formato 
+				FROM 
+					trabajos t, propuestas p 
+				WHERE 
+					t.nroCorrelativo = p.num_correlativo AND
+					t.id_tg = '$id'";
+		$propuesta = pg_Exec($db, $sql);
 		
-    $sql = "SELECT 
-                t.id_tg, p.titulo, t.nroConsejo, t.Fecha_presentacion, t.horaPresentacion, t.fechaAprobacion, t.tipo_formato 
-            FROM 
-                trabajos t, propuestas p 
-            WHERE 
-                t.nroCorrelativo = p.num_correlativo AND
-				t.id_tg = '$id'";
-	$propuesta = pg_Exec($db, $sql);
+	if(pg_result($propuesta, 0, 6 ) == 'Instrumental'){
+		$sql = "SELECT  
+					* 
+				FROM 
+					formatos f,  formato_jurado_tig ft
+				WHERE
+					f.id_formato = ft.id_formato";
+		$formato = pg_Exec($db, $sql);
+		$filas = pg_numRows($formato);
+	}else{
+		$sql = "SELECT  
+					* 
+				FROM 
+					formatos f,  formato_jurado_teg ft
+				WHERE
+					f.id_formato = ft.id_formato";
+		$formato = pg_Exec($db, $sql);
+		$filas = pg_numRows($formato);
 	
-	
+
 	$sql = "SELECT 
 				t.nombre 
 			FROM 
@@ -24,12 +43,10 @@
 				p.nroCorrelativo = '$num_correlativo' AND
 				p.cedulaTesista = t.cedula";
 
-	$tesista = pg_Exec($db,$sql);
-	$filas = pg_numRows($tesista);
+		$tesista = pg_Exec($db,$sql);
+		$filas = pg_numRows($tesista);
+    
 
-	if(pg_result($propuesta, ))
-	$sql = "SELECT 
-				";
 	
     if (isset($_POST["at"])){
 		$id = $_POST['id'];
@@ -37,16 +54,18 @@
 		$fecha   = !empty($_POST['fecha'])?$_POST['fecha']:null;
 		$hora 	 = !empty($_POST['hora'])?$_POST['hora']:null;
 		$fechaApro 	 = !empty($_POST['fechaApro'])?$_POST['fechaApro']:null;
+		$formato 	 = !empty($_POST['formato'])?$_POST['formato']:null;
 
 
 		$sql="UPDATE 
 				trabajos 
 			 SET 
-			 	nroConsejo = $consejo, Fecha_presentacion ='$fecha', horaPresentacion = '$hora', fechaAprobacion = '$fechaApro'
-			WHERE id_tg='$id'";
-
+			 	nroConsejo = $consejo, Fecha_presentacion ='$fecha', horaPresentacion = '$hora', fechaAprobacion = '$fechaApro', tipo_formato='$formato'
+			WHERE 
+				id_tg='$id'";
+		var_dump($id);die();// Error no lo hace
 		$final=pg_Exec($db,$sql);
-
+		
 		if($final==false){
 			var_dump('Error en la consulta');
 		}else{
@@ -54,6 +73,7 @@
 		}
 
 	}
+}
 
 ?>
 
@@ -75,7 +95,7 @@
 				<?php
 					endfor;
 				?>
-<input type="hidden" name="id" class="form-control" value="<?=$num_correlativo?>" readonly>
+<input type="hidden" name="id" class="form-control" value="<?=$id?>" readonly>
 
 					<div class="form-group">
 						<label for="" src="nombre">Título</label>
@@ -104,6 +124,18 @@
 							<input type="date" name="fechaApro" class="form-control" value="<?=pg_result($propuesta,0, 5)?>">
 						</div>
 
+					</div>
+<br>
+					<div class="row">
+						<select name="formato" class="form-control">
+							<?php
+								for($j=0; $j < $filas; $j++):
+							?>
+								<option value="<?=pg_result($formato,$j, 0)?>"><?=pg_result($formato,$j, 1)?></option>
+							<?php
+								endfor;
+							?>
+						</select>
 					</div>
                 
 <br>
