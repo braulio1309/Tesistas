@@ -42,7 +42,7 @@ CREATE TABLE Tesistas(
 	nombre Nombres,
 	correo_ucab mail unique,
 	correo_part mail unique,
-	telefono int not null,
+	telefono varchar(10) not null,
 	sexo Sexo,
 	primary key(cedula)
 );

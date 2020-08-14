@@ -3,10 +3,15 @@
 	require_once 'includes/conexion.php';
 	
 		$cedula=isset($_GET["cedula"])?$_GET["cedula"]: '' ;
-		$nombre=isset($_GET["nombre"])?$_GET["nombre"]: '' ;
-		$correo_ucab=isset($_GET["correo_ucab"])?$_GET["correo_ucab"]: '' ;
-		$correo_part=isset($_GET["correo_part"])?$_GET["correo_part"]: '' ;
-		$telefono=isset($_GET["telefono"])? $_GET["telefono"]: '' ;
+
+		$sql="SELECT * FROM tesistas WHERE cedula = '$cedula' ";
+		$tesista = mysqli_query($db,$sql);
+
+    	$resultado = array();
+		$resultado = $tesista;
+		$resultado = mysqli_fetch_assoc($resultado);
+
+	
 	
     if (isset($_POST["at"])){
 		$cedula=$_POST["cedula"];
@@ -15,10 +20,8 @@
 		$correo_part=$_POST["correo_part"];
 		$telefono=$_POST["telefono"];
         $sexo=$_POST["sexo"];
-
-		$sql="UPDATE tesistas SET (nombre='$nombre' , correo_ucab='$correo_ucab', correo_part='$correo_part', telefono='$telefono', sexo='$sexo'
-			   WHERE cedula='$cedula')";
-
+		$sql="UPDATE tesistas SET nombre='$nombre' , correo_ucab='$correo_ucab', correo_part='$correo_part', telefono='$telefono', sexo='$sexo'
+			   WHERE cedula='$cedula'";
 		$tesista=mysqli_query($db,$sql);
 
 		if($tesista==false){
@@ -45,19 +48,19 @@
 					</div>
 					<div class="form-group">
 						<label for="" src="nombre">Nombre</label>
-						<input type="text" name="nombre" class="form-control" id="nombre" value="<?= $nombre ?>">
+						<input type="text" name="nombre" class="form-control" id="nombre" value="<?= $resultado['nombre'] ?>">
 					</div>
 					<div class="form-group">
 						<label for="" src="correo_u">Correo UCAB</label>
-						<input type="email"  name="correo_ucab" class="form-control" id="correo_ucab" value="<?= $correo_ucab ?>">
+						<input type="email"  name="correo_ucab" class="form-control" id="correo_ucab" value="<?= $resultado['correo_ucab'] ?>">
 					</div>
 					<div class="form-group">
 						<label for="" src="correo_p">Correo Particular</label>
-						<input type="email"  name="correo_part" class="form-control" id="correo_part" value="<?= $correo_part ?>">
+						<input type="email"  name="correo_part" class="form-control" id="correo_part" value="<?= $resultado['correo_part'] ?>">
 					</div>
 					<div class="form-group">
 						<label for="" src="telefono">Telefono</label>
-						<input type="number" name="telefono" class="form-control" id="telefono" value="<?=$telefono ?>">
+						<input type="number" name="telefono" class="form-control" id="telefono" value="<?=$resultado['telefono'] ?>">
 					</div>
 					<div class="form-group">
 					<label for=""> GENERO: </label>

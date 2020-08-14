@@ -48,8 +48,8 @@
 							<td> <?= $entrada['correo_part']?> </td>	
                             <td> <?= $entrada['telefono']?> </td>
 							<td> <?= $entrada['sexo']?> </td>
-                            <td><a href="eliminar_t.php?cedula=<?=$entrada['cedula'] ?>"><input class="btn btn-danger"type="button" value="Borrar"></a></td>
-                            <td><a href="Actualizar_T.php?cedula=<?=$entrada['cedula'] ?> & nombre=<?=$entrada['nombre'] ?> & correo_ucab=<?=$entrada['correo_ucab'] ?> & correo_part=<?=$entrada['correo_part'] ?> & telefono=<?=$entrada['telefono'] ?>"><input class="btn btn-success" type="button" value="Actualizar"></a></td>					
+                            <td><a href="eliminar_t.php?cedula=<?=$entrada['cedula'] ?>"  ><input class="btn btn-danger"type="button" value="Borrar"></a></td>
+                            <td><a href="Actualizar_T.php?cedula=<?=$entrada['cedula'] ?>"><input class="btn btn-success" type="button" value="Actualizar"></a></td>					
 							</tr>
 				<?php
 						endwhile;
