@@ -1,23 +1,18 @@
 <?php
 include 'Classes/PHPExcel.php';
-    
-    $host = "localhost";
-    $dbUsername = "root";
-    $dbPassword = "";
-    $dbname = "sistema_automatizado";
-    //create connection
-    $conexion = new mysqli($host, $dbUsername, $dbPassword, $dbname);
-    
+require_once 'includes/conexion.php';
+   
     if (mysqli_connect_error()) {
         die('Connect Error('. mysqli_connect_errno().')'. mysqli_connect_error());
     } else {    
     
        $cont=2;
-        $reporteCsv = $conexion
-        ->query("SELECT 
+        $sql = "SELECT 
                     cedula, nombre, correo_ucab, correo_part, telefono, sexo  
                 FROM 
-                    tesistas"); // se hace la consulta a la base de datos
+                    tesistas"; // se hace la consulta a la base de datos
+        $tesista = pg_Exec($db, $sql);
+        $filas = pg_numRows($tesista);
         $objPHPExcel = new PHPExcel();
         header('Content-Type:text/csv; charset-latin1');
         header('Content-Disposition: attachment; filename= "Tesistas.csv" ');
@@ -32,14 +27,14 @@ include 'Classes/PHPExcel.php';
         $objPHPExcel->getActiveSheet()->setCellValue('E1','Telefono' );
         $objPHPExcel->getActiveSheet()->setCellValue('F1','Sexo' );
 
-        while($fila=$reporteCsv->fetch_assoc()){
+        for($j=0; $j<$filas; $j++){
 
-            $objPHPExcel->getActiveSheet()->setCellValue('A'.$cont,$fila['cedula']);
-            $objPHPExcel->getActiveSheet()->setCellValue('B'.$cont,$fila['nombre']);
-            $objPHPExcel->getActiveSheet()->setCellValue('C'.$cont,$fila['correo_ucab']);
-            $objPHPExcel->getActiveSheet()->setCellValue('D'.$cont,$fila['correo_part']);
-            $objPHPExcel->getActiveSheet()->setCellValue('E'.$cont,$fila['telefono']);
-            $objPHPExcel->getActiveSheet()->setCellValue('F'.$cont,$fila['sexo']);
+            $objPHPExcel->getActiveSheet()->setCellValue('A'.pg_result($tesista, $j, 0));
+            $objPHPExcel->getActiveSheet()->setCellValue('B'.pg_result($tesista, $j, 1));
+            $objPHPExcel->getActiveSheet()->setCellValue('C'.pg_result($tesista, $j, 2));
+            $objPHPExcel->getActiveSheet()->setCellValue('D'.pg_result($tesista, $j, 3));
+            $objPHPExcel->getActiveSheet()->setCellValue('E'.pg_result($tesista, $j, 4));
+            $objPHPExcel->getActiveSheet()->setCellValue('F'.pg_result($tesista, $j, 5));
             $cont++;
         }
 
