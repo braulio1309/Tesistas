@@ -54,7 +54,7 @@
     }
 
     function PropuestasAprobadas($db){
-        $sql = "SELECT * FROM propuestas p WHERE aprobacionComite = 'APROBADO'";
+        $sql = "SELECT * FROM propuestas  WHERE aprobacionComite = 'APROBADO'";
         $propuestas = mysqli_query($db, $sql);
         
         $resultado = array();
@@ -66,7 +66,7 @@
     }
 
     function PropuestasReprobadas($db){
-        $sql = "SELECT * FROM propuestas p WHERE aprobacionComite = 'REPROBADO'";
+        $sql = "SELECT * FROM propuestas  WHERE aprobacionComite = 'REPROBADO'";
         $propuestas = mysqli_query($db, $sql);
         
         $resultado = array();
