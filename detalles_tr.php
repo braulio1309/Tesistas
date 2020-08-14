@@ -46,7 +46,7 @@
 		if($final==false){
 			var_dump('Error en la consulta');
 		}else{
-			header("Location:Mostrar_t.php");
+			header("Location:Mostrar_tr.php");
 		}
 
 	}
