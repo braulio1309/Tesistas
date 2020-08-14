@@ -1,23 +1,18 @@
 <?php
 include 'Classes/PHPExcel.php';
-    
-    $host = "localhost";
-    $dbUsername = "root";
-    $dbPassword = "";
-    $dbname = "sistema_automatizado";
-    //create connection
-    $conexion = new mysqli($host, $dbUsername, $dbPassword, $dbname);
+require_once 'includes/conexion.php';   
     
     if (mysqli_connect_error()) {
         die('Connect Error('. mysqli_connect_errno().')'. mysqli_connect_error());
     } else {    
     
        $cont=2;
-        $reporteCsv = $conexion
-        ->query("SELECT 
+        $sql = "SELECT 
                     *  
                 FROM 
-                    propuestas"); // se hace la consulta a la base de datos
+                    propuestas"; // se hace la consulta a la base de datos
+        $propuesta = pg_Exec($db, $sql);
+        $filas = pg_numRows($propuesta);
         $objPHPExcel = new PHPExcel();
         header('Content-Type:text/csv; charset-latin1');
         header('Content-Disposition: attachment; filename= "Propuestas.csv" ');
@@ -33,15 +28,15 @@ include 'Classes/PHPExcel.php';
         $objPHPExcel->getActiveSheet()->setCellValue('F1','Fecha aprobación' );
         $objPHPExcel->getActiveSheet()->setCellValue('G1','Tipo' );
 
-        while($fila=$reporteCsv->fetch_assoc()){
+        for($j=0; $j<$filas; $j++){
 
-            $objPHPExcel->getActiveSheet()->setCellValue('A'.$cont,$fila['num_correlativo']);
-            $objPHPExcel->getActiveSheet()->setCellValue('B'.$cont,$fila['titulo']);
-            $objPHPExcel->getActiveSheet()->setCellValue('C'.$cont,$fila['f_entrega_esc']);
-            $objPHPExcel->getActiveSheet()->setCellValue('D'.$cont,$fila['f_presentacion_comite']);
-            $objPHPExcel->getActiveSheet()->setCellValue('E'.$cont,$fila['aprobacionComite']);
-            $objPHPExcel->getActiveSheet()->setCellValue('F'.$cont,$fila['f_aprobacion_comite']);
-            $objPHPExcel->getActiveSheet()->setCellValue('G'.$cont,$fila['f_aprobacion_comite']);
+            $objPHPExcel->getActiveSheet()->setCellValue('A'.$cont,pg_result($propuesta, $j, 0));
+            $objPHPExcel->getActiveSheet()->setCellValue('B'.$cont,pg_result($propuesta, $j, 1));
+            $objPHPExcel->getActiveSheet()->setCellValue('C'.$cont,pg_result($propuesta, $j, 2));
+            $objPHPExcel->getActiveSheet()->setCellValue('D'.$cont,pg_result($propuesta, $j, 3));
+            $objPHPExcel->getActiveSheet()->setCellValue('E'.$cont,pg_result($propuesta, $j, 4));
+            $objPHPExcel->getActiveSheet()->setCellValue('F'.$cont,pg_result($propuesta, $j, 5));
+            $objPHPExcel->getActiveSheet()->setCellValue('G'.$cont,pg_result($propuesta, $j, 6));
             $cont++;
         }
 
