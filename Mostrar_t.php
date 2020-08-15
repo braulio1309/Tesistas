@@ -54,7 +54,7 @@
 							<td> <?= pg_result($entradas, $j, 3)?> </td>	
                             <td> <?= pg_result($entradas, $j, 4)?> </td>
 							<td> <?= pg_result($entradas, $j, 5)?> </td>
-                            <td><a href="eliminar_t.php?cedula=<?=pg_result($entradas, $j, 0) ?>"  ><input class="btn btn-danger"type="button" value="Borrar"></a></td>
+                            <td><a href="eliminar_t.php?cedula=<?=pg_result($entradas, $j, 0)?>"><input class="btn btn-danger"type="button" value="Borrar"></a></td>
                             <td><a href="Actualizar_T.php?cedula=<?=pg_result($entradas, $j, 0) ?>"><input class="btn btn-success" type="button" value="Actualizar"></a></td>					
 							</tr>
 				<?php
