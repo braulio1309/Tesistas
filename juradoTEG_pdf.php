@@ -2,7 +2,7 @@
     require_once 'includes/conexion.php';
     $id = $_GET['id'];
     $sql = "SELECT 
-                pr.num_correlativo, p.nombreProfe, p.direccionProfe, p.cedula_profe, p.correoProfe, pr.titulo, pr.tipo_propuesta, tr.nroConsejo
+                pr.num_correlativo, p.nombreProfe, p.direccionProfe, p.cedula_profe, p.correoProfe, pr.titulo, pr.tipo_propuesta, tr.nroConsejo, tr.tipo_formato
             FROM 
                 profesores p, propuestas pr, trabajos tr
             WHERE 
@@ -22,21 +22,37 @@
                 pr.nroCorrelativo= $correlativo";
     $tesistas = pg_Exec($db, $sql1); 
 
+    if(pg_result($trabajo, 0, 6) == 'Instrumental'){
+        $id_formato = pg_result($trabajo,0, 8);
+       
+        $sql = "SELECT criterios, criterios, criterios, criterios FROM criterios_jurado_tig WHERE id_formato = '$id_formato'";
+        //var_dump($sql);die();
+
+        $formato = pg_Exec($db, $sql); 
+
+    }else{
+        $id_formato = pg_result($trabajo,0, 8);
+        $sql = "SELECT criterios, criterios, criterios, criterios FROM criterios_jurado_teg WHERE id_formato = '$id_formato'";
+        //var_dump($sql);die();
+        $formato = pg_Exec($db, $sql); 
+
+    }
+
+    $sql = "SELECT 
+                p.cedula_profe, p.nombreProfe, p.correoProfe, p.direccionProfe
+            FROM 
+                es_jurado , profesores p
+            WHERE 
+                (jurado_profe1 =p.cedula_profe OR 
+                jurado_profe2 = p.cedula_profe OR 
+                jurado_profe3 = p.cedula_profe OR 
+                jurado_profe4 = p.cedula_profe) AND
+                id_tg = $id";
+    $jurados = pg_Exec($db, $sql); 
+
+
     require('./fpdf.php');
  
-    /*$pdf=new FPDF();
-    $pdf->AddPage();
-    $pdf->SetFont('Arial','B',16);
-    $pdf->Cell(20,10,pg_result($trabajo,0, 5));
-    $pdf->Cell(10,60,'Nombre del tesista:');
-    $pdf->Cell(10,120,'Nombre del tutor:');
-    $pdf->Cell(10,180,'Criterios:');
-
-
-    $pdf->Output(); */
-
-
-
 
     class PDF extends FPDF
 {
@@ -67,6 +83,9 @@ function BasicTable($header, $data, $info)
 
 
 
+
+
+
 }
 
 $pdf = new PDF();
@@ -80,11 +99,25 @@ $header = array('Cedula', 'Nombre', 'Direccion', 'Correo');
 // Carga de datos
 $data = $tesistas;
 
+$pdf->Ln();
+
 $pdf->BasicTable($header,$data, 'Tesistas');
 $data = $trabajo;
 $header = array('ID', 'TUTOR', 'Direccion', 'Cedula');
 
+$pdf->Ln();
+
 $pdf->BasicTable($header,$data, 'Tutor');
+
+$header = array('Criterios a evaluar');
+$data = $formato;
+$pdf->BasicTable($header,$data, 'Criterios');
+
+$pdf->Ln();
+$header = array('Cedula', 'Nombre', 'correo', 'direccion');
+$data = $jurados;
+$pdf->BasicTable($header,$data, 'jurados');
+
 
 
 $pdf->AddPage();

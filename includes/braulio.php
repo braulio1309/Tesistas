@@ -27,7 +27,7 @@
     // CONSULTA PARA MOSTRAR TODOS LOS TRABAJOS
     function mostrartrabajos($db){
         $sql = "SELECT 
-                    t.id_tg, p.titulo, t.nroConsejo, t.Fecha_presentacion, t.horaPresentacion, t.fechaAprobacion,  t.nroCorrelativo, t.nroCorrelativo
+                    t.id_tg, p.titulo, t.nroConsejo, t.Fecha_presentacion, t.horaPresentacion, t.fechaAprobacion,  t.nroCorrelativo, t.nroCorrelativo, p.tipo_propuesta
                 FROM 
                     trabajos t, propuestas p 
                 WHERE 

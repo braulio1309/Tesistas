@@ -20,11 +20,9 @@ require_once 'includes/conexion.php';
                     ('$id_tg', $cedula )";
         $jurados = pg_Exec($db, $sql);
     }else{
-        $resultado = array();
-	    $resultado = $jurados;
-        $resultado = mysqli_fetch_assoc($jurados);
+       
         
-        if($resultado['jurado_profe2'] == null){
+        if(pg_result($jurados,0 ,2) == null){
             //die();
             $sql = "UPDATE es_jurado
 				SET 
@@ -34,19 +32,19 @@ require_once 'includes/conexion.php';
             $update = pg_Exec($db,$sql);
             //var_dump($sql);die();
         }else 
-            if($resultado['jurado_profe3'] == null){
+            if(pg_result($jurados,0 ,3) == null){
                 $sql = "UPDATE es_jurado
 				SET 
 					jurado_profe3 = $cedula
 				WHERE 
-					id_tg = '$id_tg'; ";
+					id_tg = '$id_tg'";
 		        $update = pg_Exec($db,$sql);
             }else{
                 $sql = "UPDATE es_jurado
 				SET 
 					jurado_profe4 = $cedula
 				WHERE 
-					id_tg = '$id_tg'; ";
+					id_tg = '$id_tg'";
 		        $update = pg_Exec($db,$sql);
             }
         

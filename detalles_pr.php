@@ -13,6 +13,23 @@
 			num_correlativo = '$id' AND
 	 		p.cedula_profe = pr.cedula_profe";
 	$entradas = pg_Exec($db,$sql);
+	if(pg_result($entradas,0,6)=='Instrumental'){
+		$sql="SELECT 
+		*
+		FROM 
+			instrumentales
+		WHERE 
+			nro_correlativo = '$id'";
+		$aparte = pg_exec($db,$sql);
+	}else{
+		$sql="SELECT 
+				*
+			FROM 
+				experimentales
+			WHERE 
+				numr_correlativo = '$id'";
+		$aparte = pg_exec($db,$sql);
+	}
 
     
 	$sql = "SELECT 
@@ -194,18 +211,18 @@
 						?>
 							<div class="col-sm-6">
 								<label>Nombre Empresa</label>
-								<input type="text" name="nombreEmpresa" class="form-control" value="" >	
+								<input type="text" name="nombreEmpresa" class="form-control" value="<?=pg_result($aparte,0,1)?>" >	
 							</div>
 							<div class="col-sm-6">
 								<label>Tutor Empresa</label>
-								<input type="text" name="nombreTutor" class="form-control" value="" >	
+								<input type="text" name="nombreTutor" class="form-control" value="<?=pg_result($aparte,0,2)?>" >	
 							</div>
 						<?php
 							else: 
 						?>
 							<div class="col-sm-6">
 								<label>Profesor que avala</label>
-								<input type="text" name="profesorAvala" class="form-control" value="" >	
+								<input type="text" name="profesorAvala" class="form-control" value="<?=pg_result($aparte,0,1)?>" >	
 							</div>
 						<?php
 							endif;

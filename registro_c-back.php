@@ -6,7 +6,6 @@ require_once 'includes/conexion.php';
     $sql = "SELECT * FROM formatos WHERE id_formato = '$id'";
     $criterios = pg_Exec($db, $sql);
 
-    
 
     if(pg_result($criterios,0,2) == 'tutor_tig'){
         $sql="INSERT INTO  criterios_tutor_tig
@@ -22,7 +21,7 @@ require_once 'includes/conexion.php';
                 (id_formato, criterios) 
             VALUES
                 ($id, '$criterio')";
-                var_dump($sql);die();
+               // var_dump($sql);die();
             $formato = pg_Exec($db,$sql);
 
         }else
@@ -51,7 +50,7 @@ require_once 'includes/conexion.php';
                                 VALUES
                                     ($id, '$criterio')";
                         $formato = pg_Exec($db,$sql);
-                        var_dump($sql);die();
+                        //var_dump($sql);die();
 
                     }else
                         if(pg_result($criterios,0,2) == 'jurado_teg'){
@@ -60,6 +59,8 @@ require_once 'includes/conexion.php';
                                         (id_formato, criterios) 
                                     VALUES
                                         ($id, '$criterio')";
+                                //var_dump($sql);die();
+
                             $formato = pg_Exec($db,$sql);
 
                         }

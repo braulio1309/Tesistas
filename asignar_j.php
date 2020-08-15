@@ -20,9 +20,8 @@ require_once 'includes/conexion.php';
                                             COUNT(pr.cedula_profe) < 5)";
                                                
     $profe = pg_Exec($db, $sql);
-    $resultado = array();
-    $resultado = $profe;
-
+    $filas = pg_NumRows($profe);
+    
     require_once 'includes/cabecera.php';
 ?>
 
@@ -31,7 +30,7 @@ require_once 'includes/conexion.php';
 	<div class="container">
 		<h1>Asignar Jurados </h1>
         <?php
-            if(pg_NumRows($resultado) >= 1):
+            if(pg_NumRows($profe) >= 1):
         ?>
 		<form action="asignar_j_back.php" method="POST" >
 			<div class="card-header">
@@ -44,11 +43,11 @@ require_once 'includes/conexion.php';
                                 <select class="form-control" name="cedula">
                                 <?php 
                                 
-                                    while($entrada = mysqli_fetch_assoc($resultado)):
-                                ?>
-                                        <option value="<?=$entrada['cedula_profe']?>"><?=$entrada['nombreProfe']?></option>
+                                for ($j=0; $j < $filas; $j++):
+                                    ?>
+                                        <option value="<?=pg_result($profe, $j, 0)?>"><?=pg_result($profe, $j, 1)?></option>
                                 <?php
-                                    endwhile;
+                                    endfor;
                                 ?>
                                 </select>
                             </div>

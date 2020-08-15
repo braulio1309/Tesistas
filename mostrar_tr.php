@@ -60,7 +60,7 @@
 							<td> <?= pg_result($entradas, $j, 3)	?> </td>	
                             <td> <?= pg_result($entradas, $j, 4)	?> </td>
                             <td> <?= pg_result($entradas, $j, 5)?> </td>
-							<td> <?= pg_result($entradas, $j, 6)		?> </td>
+							<td> <?= pg_result($entradas, $j, 8)		?> </td>
 
                             <td><a href="eliminar_tr.php?id=<?=pg_result($entradas, $j, 0) ?>"><input class="btn btn-danger"type="button" value="Borrar"></a></td>
                             <td><a href="detalles_tr.php?id=<?=pg_result($entradas, $j, 0) ?>& num_correlativo=<?=pg_result($entradas, $j, 6)?>"><input class="btn btn-success" type="button" value="Detalles"></a></td>					

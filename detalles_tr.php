@@ -5,17 +5,16 @@
     require_once 'includes/conexion.php';
 	$id = isset($_GET["id"]) ? $_GET["id"]: null;
 	$num_correlativo = isset($_GET["num_correlativo"]) ? $_GET["num_correlativo"]: null;
-
+	if($id){
 		$sql = "SELECT 
-					t.id_tg, p.titulo, t.nroConsejo, t.Fecha_presentacion, t.horaPresentacion, t.fechaAprobacion, t.tipo_formato 
+					t.id_tg, p.titulo, t.nroConsejo, t.Fecha_presentacion, t.horaPresentacion, t.fechaAprobacion, t.tipo_formato, p.tipo_propuesta
 				FROM 
 					trabajos t, propuestas p 
 				WHERE 
 					t.nroCorrelativo = p.num_correlativo AND
 					t.id_tg = '$id'";
 		$propuesta = pg_Exec($db, $sql);
-		
-	if(pg_result($propuesta, 0, 6 ) == 'Instrumental'){
+		if(pg_result($propuesta, 0, 7) == 'Instrumental'){
 		$sql = "SELECT  
 					* 
 				FROM 
@@ -33,20 +32,21 @@
 					f.id_formato = ft.id_formato";
 		$formato = pg_Exec($db, $sql);
 		$filas = pg_numRows($formato);
+	}
+
+$sql = "SELECT 
+			t.nombre 
+		FROM 
+			presentan p, tesistas t 
+		WHERE 
+			p.nroCorrelativo = '$num_correlativo' AND
+			p.cedulaTesista = t.cedula";
+
+	$tesista = pg_Exec($db,$sql);
+	$filasT = pg_numRows($tesista);
+
 	
-
-	$sql = "SELECT 
-				t.nombre 
-			FROM 
-				presentan p, tesistas t 
-			WHERE 
-				p.nroCorrelativo = '$num_correlativo' AND
-				p.cedulaTesista = t.cedula";
-
-		$tesista = pg_Exec($db,$sql);
-		$filas = pg_numRows($tesista);
-    
-
+}		
 	
     if (isset($_POST["at"])){
 		$id = $_POST['id'];
@@ -56,24 +56,25 @@
 		$fechaApro 	 = !empty($_POST['fechaApro'])?$_POST['fechaApro']:null;
 		$formato 	 = !empty($_POST['formato'])?$_POST['formato']:null;
 
-
+//var_dump($formato);die();
 		$sql="UPDATE 
 				trabajos 
 			 SET 
 			 	nroConsejo = $consejo, Fecha_presentacion ='$fecha', horaPresentacion = '$hora', fechaAprobacion = '$fechaApro', tipo_formato='$formato'
 			WHERE 
 				id_tg='$id'";
-		var_dump($id);die();// Error no lo hace
+		//var_dump($id);die();// Error no lo hace
 		$final=pg_Exec($db,$sql);
 		
 		if($final==false){
 			var_dump('Error en la consulta');
 		}else{
 			header("Location:Mostrar_tr.php");
+			exit;
 		}
 
 	}
-}
+
 
 ?>
 
@@ -84,7 +85,7 @@
 				
 				<?php 
                                 
-					for ($j=0; $j < $filas; $j++):
+					for ($j=0; $j < $filasT; $j++):
 				?>
 					<div class="form-group">
 						<label  src="cedula">Autor</label>
