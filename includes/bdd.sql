@@ -255,27 +255,12 @@ CREATE TABLE Tiene(
 
 -- CREAMOS TABLA DEL PROFESOR QUE ES JURADO
 CREATE TABLE Es_Jurado(
-	id_tg int not null,
 	jurado_profe1 varchar(20),
 	jurado_profe2 varchar(20),
 	jurado_profe3 varchar(20),
 	jurado_profe4 varchar(20),
 
 	REFERENCES Profesores(cedula_profe) ON DELETE SET NULL ON UPDATE CASCADE,
-	
-	FOREIGN KEY(id_tg) 
-	REFERENCES Trabajos(id_tg) ON DELETE SET NULL ON UPDATE CASCADE
-);
-
-CREATE TABLE criterios_tutor_tig(
-	id_formato int not null,
-	criterios TextoL,
-	primary key(id_formato,criterios),
-	FOREIGN KEY(id_formato) 
-	REFERENCES formato_tutor_tig(id_formato) ON DELETE SET NULL ON UPDATE CASCADE
-);
-
-CREATE TABLE criterios_tutor_teg(
 	id_formato int not null,
 	criterios TextoL,
 	primary key(id_formato,criterios),

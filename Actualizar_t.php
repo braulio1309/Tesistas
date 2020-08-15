@@ -69,6 +69,8 @@
 						<input class="radio-inline" type="radio" name="sexo" id="" value="F">F 
 					</div>
 					<input type="submit" class="btn btn-primary" name="at" id="rt" value="Actualizar Datos">
+					<a href="eliminar_t.php?cedula=<?=$_GET["cedula"] ?>"  ><input class="btn btn-danger"type="button" value="Borrar"></a>
+
 				</div>
 			</div>
 		</form>
